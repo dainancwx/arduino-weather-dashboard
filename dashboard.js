@@ -1,4 +1,4 @@
-const API_KEY = 'YOUR_API_KEY'; // Replace with your OpenWeather API key
+const API_KEY = 'e206db49c3fd97a44f2e622d697c0bd7'; // Replace with your OpenWeather API key
 const LAT = 37.9811;
 const LON = -90.0548;
 
