@@ -1,24 +1,35 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>MESONET Weather Dashboard</title>
-  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div class="container">
-    <div class="main">
-      <div class="temp" id="tempCard"><span>--</span> °F</div>
-      <div class="label">Current Temperature</div>
-      <div class="small">Humidity: <span id="humidityVal">--</span>%</div>
-      <div class="small">Pressure: <span id="pressureVal">--</span> hPa</div>
+  <div class="dashboard">
+    <div class="left-panel">
+      <div class="temp">
+        <div class="big-temp"><span id="tempVal">--</span>°F</div>
+        <div class="description">Current Temperature</div>
+        <div class="info">Humidity: <span id="humidityVal">--</span>%</div>
+        <div class="info">Pressure: <span id="pressureVal">--</span> hPa</div>
+      </div>
     </div>
 
-    <div class="sidebar">
-      <div class="card"><strong>Wind Speed:</strong> <span id="windSpeedVal">--</span> mph</div>
-      <div class="card"><strong>Wind Direction:</strong> <span id="windDirVal">--</span> °</div>
-      <div class="card"><strong>Last Updated:</strong> <span id="lastUpdate">--</span></div>
+    <div class="right-panel">
+      <div class="data-box">
+        <div class="label">Wind Speed</div>
+        <div class="value"><span id="windSpeedVal">--</span> mph</div>
+      </div>
+      <div class="data-box">
+        <div class="label">Wind Direction</div>
+        <div class="value"><span id="windDirVal">--</span>°</div>
+      </div>
+      <div class="data-box">
+        <div class="label">Last Updated</div>
+        <div class="value" id="lastUpdate">--</div>
+      </div>
     </div>
   </div>
 
