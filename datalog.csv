@@ -1,2 +1,2 @@
-Timestamp,Temperature,Humidity,Pressure,Angle,Sound,Coil
-2025-05-25 14:01:00,24.7,43.2,1011.8,123,320,870
+Timestamp,Temperature,Humidity,Pressure,WindDirection,WindSpeed
+2025-05-25 14:00:00,24.7,43.2,1011.8,123.5,5.8
