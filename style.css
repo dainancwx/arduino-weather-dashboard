@@ -34,7 +34,6 @@ h1 {
   flex: 1 1 300px;
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
 }
 
 /* Temperature box (left panel) */
@@ -59,29 +58,44 @@ h1 {
   color: #aaa;
 }
 
-/* Cards on right panel */
+/* Right panel cards container - remove gap, stack tightly */
+.right-panel {
+  gap: 0;
+}
+
+/* Cards on right panel - remove margin bottom to connect */
 .right-panel .card {
   background-color: #222;
   border-left: 5px solid #4a90e2;
-  border-radius: 10px;
+  border-radius: 0; /* remove rounding to connect */
   padding: 1rem 1.5rem;
   font-size: 1.1rem;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  box-shadow: none; /* remove shadows for cleaner connected look */
   display: flex;
   align-items: center;
-  gap: 0.75rem;
-  margin-bottom: 1.25rem;
+  justify-content: space-between;
+  border-top: 1px solid #444; /* subtle divider between cards */
 }
 
-/* Remove margin from last card */
+/* First card gets top-left and top-right rounding */
+.right-panel .card:first-child {
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  border-top: none;
+}
+
+/* Last card gets bottom-left and bottom-right rounding */
 .right-panel .card:last-child {
-  margin-bottom: 0;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+  border-bottom: none;
 }
 
 /* Icon styling */
 .right-panel .card::before {
   font-size: 1.4rem;
   line-height: 1;
+  margin-right: 0.75rem;
 }
 
 /* Specific icons for each card */
@@ -104,57 +118,29 @@ h1 {
   flex-shrink: 0;
 }
 
-/* Align spans for wind speed and direction */
+/* Value spans aligned right with fixed width for consistent alignment */
 #windSpeedCard span,
 #windDirCard span {
   color: #fff;
   font-weight: normal;
-  flex-grow: 1;
+  flex-grow: 0;
   text-align: right;
+  width: 60px;
 }
 
-/* Live Time card: center content */
+/* Live Time card - center icon and text horizontally */
 #liveTimeCard {
   justify-content: center;
   gap: 0.5rem;
 }
 
+/* Live Time text */
 #liveTimeCard strong,
 #liveTimeCard span {
   text-align: center;
-  flex-grow: 0;
   color: #fff;
   font-weight: normal;
-  margin-left: 0.25rem;
-}
-
-/* Forecast styles */
-.forecast-title {
-  margin-top: 3rem;
-  font-size: 1.5rem;
-  text-align: center;
-}
-
-.forecast-container {
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-  gap: 1rem;
-  padding-top: 1rem;
-}
-
-.forecast-day {
-  background-color: #1e1e1e;
-  border-radius: 8px;
-  padding: 1rem;
-  text-align: center;
-  width: 130px;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.3);
-  color: #eee;
-}
-
-.forecast-day img {
-  width: 48px;
-  height: 48px;
-  margin-bottom: 0.5rem;
+  flex-grow: 0;
+  margin: 0;
+  width: auto;
 }
