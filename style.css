@@ -89,15 +89,15 @@ main {
   box-shadow: 0 0 6px rgba(0, 120, 255, 0.25);
 }
 
-/* Wind speed and direction line */
+/* Wind speed and direction stacked vertically */
 #windCard > div {
   display: flex;
-  align-items: center;
+  flex-direction: column;
   gap: 10px;
-}
-
-#windCard > div:first-child {
   font-size: 1.25rem;
+  font-weight: 600;
+  color: #ccc;
+  user-select: none;
 }
 
 /* Live time card overrides for inline layout */
@@ -123,6 +123,7 @@ main {
   font-weight: 700;
   margin-bottom: 15px;
   font-size: 1.6rem;
+  text-align: center;
   user-select: none;
 }
 
@@ -133,14 +134,15 @@ main {
   overflow-x: auto;
   padding-bottom: 10px;
   user-select: none;
+  justify-content: center;
 }
 
 /* Each forecast day card */
 .forecast-day {
   background-color: #222;
   border-radius: 14px;
-  min-width: 130px;
-  max-width: 140px;
+  min-width: 150px;
+  max-width: 160px;
   padding: 18px 14px;
   box-shadow: 0 0 10px rgba(0, 120, 255, 0.3);
   display: flex;
