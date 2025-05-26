@@ -1,9 +1,15 @@
 async function loadWeatherData() {
   try {
-    const response = await fetch('datalog.csv', { cache: "no-store" }); // prevent caching
+    // Prevent browser cache for fresh data
+    const response = await fetch('datalog.csv', { cache: "no-store" });
     const text = await response.text();
     const lines = text.trim().split('\n');
+
+    // Skip header line and get last data line
+    if (lines.length < 2) return; // no data yet
     const latest = lines[lines.length - 1];
+
+    // CSV columns: Timestamp,Temperature,Humidity,Pressure,WindSpeed,WindDirection
     const [timestamp, tempF, humidity, pressure, windSpeed, windDirection] = latest.split(',');
 
     document.getElementById('temperature').textContent = `${parseFloat(tempF).toFixed(1)}°F`;
@@ -20,17 +26,18 @@ async function loadWeatherData() {
 function updateClock() {
   const now = new Date();
   const timestamp = now.getFullYear() + '-' +
-                  String(now.getMonth() + 1).padStart(2, '0') + '-' +
-                  String(now.getDate()).padStart(2, '0') + ' ' +
-                  String(now.getHours()).padStart(2, '0') + ':' +
-                  String(now.getMinutes()).padStart(2, '0') + ':' +
-                  String(now.getSeconds()).padStart(2, '0');
+                    String(now.getMonth() + 1).padStart(2, '0') + '-' +
+                    String(now.getDate()).padStart(2, '0') + ' ' +
+                    String(now.getHours()).padStart(2, '0') + ':' +
+                    String(now.getMinutes()).padStart(2, '0') + ':' +
+                    String(now.getSeconds()).padStart(2, '0');
   document.getElementById('liveClock').textContent = `Current Time: ${timestamp}`;
 }
 
-// Load weather data immediately, then every 30 seconds
+// Initial load
 loadWeatherData();
-setInterval(loadWeatherData, 5000);
-
 updateClock();
+
+// Refresh every 30 seconds and 1 second respectively
+setInterval(loadWeatherData, 30000);
 setInterval(updateClock, 1000);
