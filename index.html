@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>MESONET Weather Dashboard</title>
   <link rel="stylesheet" href="style.css" />
 </head>
@@ -11,7 +11,6 @@
   <div id="lastUpdated">Last Updated: --</div>
 
   <div class="container">
-    <!-- Left Panel -->
     <div class="left-panel">
       <div class="temperature-display">
         <div id="tempValue">-- °F</div>
@@ -22,19 +21,24 @@
       </div>
     </div>
 
-    <!-- Right Panel -->
     <div class="right-panel">
-      <div class="card" id="windSpeedCard">🌬️ Wind Speed: <span>-- mph</span></div>
-      <div class="card" id="windDirectionCard">🧭 Wind Direction: <span>--°</span></div>
+      <div class="card" id="windSpeedCard">
+        💨 <strong>Wind Speed:</strong> <span id="windSpeedValue">-- mph</span>
+      </div>
+      <div class="card" id="windDirCard">
+        🧭 <strong>Wind Direction:</strong> <span id="windDirValue">-- °</span>
+      </div>
       <div class="card" id="liveTimeCard">
-        <strong>⏱️ Live Time:</strong><br/>
-        <span id="localTime" style="display: block; color: #ccc;">--:--:--</span>
-        <span id="zuluTime" style="display: block; color: #ccc;">Zulu: --:--:--</span>
+        <span class="live-label">⏱️ Live Time:</span>
+        <div class="times-container">
+          <div id="localTime">--:--:-- --</div>
+          <div id="utcTime">--:--:-- UTC</div>
+        </div>
       </div>
     </div>
   </div>
 
-  <h2 class="forecast-title">5-Day 8-Hour Forecast</h2>
+  <h2 class="forecast-title">5-Day 3-Hour Forecast</h2>
   <div id="forecast" class="forecast-container">Loading forecast...</div>
 
   <script src="dashboard.js"></script>
