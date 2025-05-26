@@ -2,36 +2,29 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Weather Dashboard</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
   <div class="container">
     <div class="left-panel">
-      <div id="datetime" class="datetime"></div>
-      <div class="temperature-display">
-        <div id="temperature" class="temperature">--°F</div>
-        <div class="label">Current Temperature</div>
-        <div class="metric">Humidity: <span id="humidity">--%</span></div>
-        <div class="metric">Pressure: <span id="pressure">-- hPa</span></div>
+      <div class="temperature" id="temperature">-- °F</div>
+      <div class="label">Current Temperature</div>
+      <div class="details">
+        <div id="humidity">Humidity: --%</div>
+        <div id="pressure">Pressure: -- hPa</div>
       </div>
     </div>
+
     <div class="right-panel">
-      <div class="card">
-        <span>Wind Speed</span>
-        <span id="windSpeed">--</span> <span>mph</span>
-      </div>
-      <div class="card">
-        <span>Wind Direction</span>
-        <span id="windDirection">--°</span>
-      </div>
-      <div class="card">
-        <span>Last Updated</span>
-        <span id="lastUpdated">--</span>
-      </div>
+      <div class="info" id="windSpeed">Wind Speed: -- mph</div>
+      <div class="info" id="windDirection">Wind Direction: --°</div>
+      <div class="info" id="lastUpdated">Last Updated: --</div>
+      <div class="info" id="liveClock">Current Time: --</div>
     </div>
   </div>
+
   <script src="dashboard.js"></script>
 </body>
 </html>
