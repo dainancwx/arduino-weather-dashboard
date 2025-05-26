@@ -1,3 +1,4 @@
+/* Global Styles */
 body {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   background-color: #111;
@@ -14,11 +15,12 @@ h1 {
 
 #lastUpdated {
   text-align: center;
-  font-size: 1rem;
+  font-size: 0.95rem;
   color: #ccc;
   margin-bottom: 2rem;
 }
 
+/* Container for main panels */
 .container {
   display: flex;
   flex-wrap: wrap;
@@ -26,6 +28,7 @@ h1 {
   gap: 2rem;
 }
 
+/* Left and Right panels */
 .left-panel, .right-panel {
   flex: 1 1 320px;
   display: flex;
@@ -33,7 +36,7 @@ h1 {
   gap: 1.5rem;
 }
 
-/* Temperature Box */
+/* Left Panel - Temperature Display */
 .temperature-display {
   background-color: #222;
   border-left: 6px solid #00ff88;
@@ -51,33 +54,44 @@ h1 {
 
 .sub-info {
   margin-top: 1rem;
-  font-size: 1.1rem;
+  font-size: 1rem;
   color: #aaa;
 }
 
-/* Right Panel Cards */
-.card {
+/* Right Panel - Unified card container */
+.right-panel {
   background-color: #222;
-  border-left: 5px solid #4a90e2;
-  border-radius: 10px;
-  padding: 1.2rem 1.5rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+  padding: 1rem 1.5rem;
+}
+
+/* Cards inside right panel */
+.right-panel .card {
+  border-left: none;           /* no border-left on individual cards */
+  padding: 1rem 0;
+  border-bottom: 1px solid #444;
   font-size: 1.2rem;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 
-.card span {
+.right-panel .card:last-child {
+  border-bottom: none;         /* no border under last card */
+}
+
+.right-panel .card span {
   font-weight: bold;
   color: #fff;
 }
 
-/* Forecast Styles */
+/* Forecast section */
 .forecast-title {
   margin-top: 3rem;
   font-size: 1.5rem;
   text-align: center;
+  color: #ccc;
 }
 
 .forecast-container {
@@ -95,11 +109,11 @@ h1 {
   text-align: center;
   width: 130px;
   box-shadow: 0 2px 6px rgba(0,0,0,0.3);
-  color: #eee;
+  color: #ddd;
 }
 
 .forecast-day img {
   width: 48px;
   height: 48px;
-  margin: 0.25rem 0;
+  margin: 0.5rem 0;
 }
