@@ -42,7 +42,7 @@ function updateLiveTime() {
 
 async function fetchForecast() {
   try {
-    const url = `https://api.openweathermap.org/data/2.5/forecast?lat=${LAT}&lon=${LON}&units=imperial&appid=${API_KEY}`;
+    const url = `https://api.openweathermap.org/data/2.5/forecast?lat=38.336418776106676&lon=-90.15364904539364&units=imperial&appid=f9c86aa8266a0d5c15d39ad5ca0b6c7e`;
     const res = await fetch(url);
     const data = await res.json();
 
