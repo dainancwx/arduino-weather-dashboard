@@ -101,24 +101,31 @@ h1 {
 .right-panel .card strong {
   font-weight: bold;
   color: #ccc;
+  flex-shrink: 0;
 }
 
-.right-panel .card span {
+/* Align spans for wind speed and direction */
+#windSpeedCard span,
+#windDirCard span {
   color: #fff;
   font-weight: normal;
   flex-grow: 1;
   text-align: right;
 }
 
-/* Center the Live Time card content horizontally */
+/* Live Time card: center content */
 #liveTimeCard {
   justify-content: center;
+  gap: 0.5rem;
 }
 
 #liveTimeCard strong,
 #liveTimeCard span {
   text-align: center;
-  flex-grow: unset;
+  flex-grow: 0;
+  color: #fff;
+  font-weight: normal;
+  margin-left: 0.25rem;
 }
 
 /* Forecast styles */
