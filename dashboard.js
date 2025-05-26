@@ -126,8 +126,6 @@ function updateTimeDisplays() {
   `;
 }
 
-
-
 // Load data
 fetchCurrentData();
 fetchForecast();
