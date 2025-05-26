@@ -89,24 +89,18 @@ main {
   box-shadow: 0 0 6px rgba(0, 120, 255, 0.25);
 }
 
-/* Wind speed and direction stacked vertically, label and value side by side */
+/* Wind speed and direction line */
 #windCard > div {
   display: flex;
-  flex-direction: column;
-  gap: 15px;
+  align-items: center;
+  gap: 10px;
 }
 
-#windCard > div > div {
-  display: flex;
-  justify-content: space-between;
+#windCard > div:first-child {
   font-size: 1.25rem;
-  color: #ccc;
-  font-weight: 600;
-  user-select: none;
-  min-width: 180px;
 }
 
-/* Live Time card inline with spacing */
+/* Live time card overrides for inline layout */
 #liveTimeCard {
   flex-direction: row;
   justify-content: flex-start;
@@ -115,14 +109,60 @@ main {
   color: #aaa;
   font-size: 1.1rem;
   user-select: none;
+}
+
+/* Forecast Section */
+#forecastSection {
+  padding: 0 30px 30px 30px;
+  max-width: 960px;
+  margin: 0 auto 40px auto;
+}
+
+#forecastSection h2 {
+  color: #eee;
+  font-weight: 700;
+  margin-bottom: 15px;
+  font-size: 1.6rem;
+  user-select: none;
+}
+
+/* Forecast container holds the forecast day cards horizontally */
+.forecastContainer {
+  display: flex;
+  gap: 18px;
+  overflow-x: auto;
+  padding-bottom: 10px;
+  user-select: none;
+}
+
+/* Each forecast day card */
+.forecast-day {
+  background-color: #222;
+  border-radius: 14px;
+  min-width: 130px;
+  max-width: 140px;
+  padding: 18px 14px;
+  box-shadow: 0 0 10px rgba(0, 120, 255, 0.3);
+  display: flex;
+  flex-direction: column;
   align-items: center;
+  color: #ddd;
+  font-weight: 600;
+  user-select: none;
 }
 
-.timeText {
-  white-space: nowrap;
+.forecast-day div:first-child {
+  font-size: 1.1rem;
+  margin-bottom: 8px;
 }
 
-/* Add spacing between Live Time label and times */
-#liveTimeCard > span:first-child {
-  margin-right: 10px;
+.forecast-day img {
+  width: 70px;
+  height: 70px;
+  margin-bottom: 8px;
+}
+
+.forecast-day div:last-child {
+  font-size: 1.25rem;
+  color: #59a6ff;
 }
