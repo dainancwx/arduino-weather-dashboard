@@ -3,19 +3,20 @@ async function fetchCSV() {
   const response = await fetch("data/datalog.csv");
   const text = await response.text();
   const rows = text.trim().split("\n").slice(1); // skip header
-  const timestamps = [], temp = [], hum = [], angle = [], sound = [], coil = [];
+
+  const timestamps = [], windSpeed = [], windDir = [], hum = [], pressure = [], temp = [];
 
   rows.forEach(row => {
     const cols = row.split(",");
     timestamps.push(cols[0]);
-    temp.push(parseFloat(cols[1]));
-    hum.push(parseFloat(cols[2]));
-    angle.push(parseFloat(cols[4]));
-    sound.push(parseInt(cols[5]));
-    coil.push(parseInt(cols[6]));
+    windSpeed.push(parseFloat(cols[1]));
+    windDir.push(parseFloat(cols[2]));
+    hum.push(parseFloat(cols[3]));
+    pressure.push(parseFloat(cols[4]));
+    temp.push(parseFloat(cols[5]));
   });
 
-  return { timestamps, temp, hum, angle, sound, coil };
+  return { timestamps, windSpeed, windDir, hum, pressure, temp };
 }
 
 function createChart(id, label, labels, data, color) {
@@ -82,10 +83,10 @@ function createChart(id, label, labels, data, color) {
   });
 }
 
-fetchCSV().then(({ timestamps, temp, hum, angle, sound, coil }) => {
+fetchCSV().then(({ timestamps, windSpeed, windDir, hum, pressure, temp }) => {
+  createChart('windSpeedChart', 'Wind Speed (m/s)', timestamps, windSpeed, 'blue');
+  createChart('windDirChart', 'Wind Direction (°)', timestamps, windDir, 'green');
+  createChart('humidityChart', 'Humidity (%)', timestamps, hum, 'teal');
+  createChart('pressureChart', 'Pressure (hPa)', timestamps, pressure, 'orange');
   createChart('temperatureChart', 'Temperature (°C)', timestamps, temp, 'red');
-  createChart('humidityChart', 'Humidity (%)', timestamps, hum, 'blue');
-  createChart('angleChart', 'Angle (°)', timestamps, angle, 'green');
-  createChart('soundChart', 'Sound Level', timestamps, sound, 'orange');
-  createChart('coilChart', 'Coil Reading', timestamps, coil, 'purple');
 });
