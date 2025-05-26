@@ -3,7 +3,6 @@ async function loadWeatherData() {
     const response = await fetch('datalog.csv', { cache: 'no-store' });
     const text = await response.text();
     const lines = text.trim().split('\n');
-
     if (lines.length < 2) return;
 
     const latest = lines[lines.length - 1];
@@ -14,7 +13,10 @@ async function loadWeatherData() {
     document.getElementById('pressure').textContent = `Pressure: ${pressure} hPa`;
     document.getElementById('windSpeed').textContent = `Wind Speed: ${windSpeed} mph`;
     document.getElementById('windDirection').textContent = `Wind Direction: ${windDirection}°`;
-    document.getElementById('lastUpdated').textContent = `Last Updated: ${timestamp}`;
+
+    // Format last updated time with AM/PM
+    const formattedTimestamp = formatTimestampWithAmPm(timestamp);
+    document.getElementById('lastUpdated').textContent = `Last Updated: ${formattedTimestamp}`;
   } catch (error) {
     console.error('Failed to load weather data:', error);
   }
