@@ -1,2 +1,2 @@
-Timestamp,WindSpeed,WindDirection,Temperature,Pressure,Humidity,
-2025-05-26 00:43:43,72.4,45,1013,8.2,135
+timestamp,windSpeed,windDir,humidity,pressure,tempF
+2025-05-26 16:02:00,3.2,145,45.1,1013.2,21.3
