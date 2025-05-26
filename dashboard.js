@@ -5,7 +5,7 @@ const LON = -90.0548;
 async function fetchWeatherData() {
   try {
     const response = await fetch(
-      `https://api.openweathermap.org/data/2.5/onecall?lat=${LAT}&lon=${LON}&exclude=minutely,hourly,alerts&units=imperial&appid=${API_KEY}`
+      `https://api.openweathermap.org/data/2.5/onecall?lat=${37.981104412392135}&lon=${-90.05484322171593}&exclude=minutely,hourly,alerts&units=imperial&appid=${e206db49c3fd97a44f2e622d697c0bd7}`
     );
     const data = await response.json();
 
