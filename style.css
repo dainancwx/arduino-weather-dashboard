@@ -34,6 +34,7 @@ h1 {
   flex: 1 1 300px;
   display: flex;
   flex-direction: column;
+  gap: 1.5rem;
 }
 
 /* Temperature box (left panel) */
@@ -58,58 +59,51 @@ h1 {
   color: #aaa;
 }
 
-/* Right panel cards container - remove gap, stack tightly */
-.right-panel {
-  gap: 0;
-}
-
-/* Cards on right panel - remove margin bottom to connect */
+/* Cards on right panel */
 .right-panel .card {
   background-color: #222;
-  border-left: 5px solid #4a90e2;
-  border-radius: 0; /* remove rounding to connect */
+  border-left: none;  /* Removed blue line here */
+  border-radius: 10px;
   padding: 1rem 1.5rem;
   font-size: 1.1rem;
-  box-shadow: none; /* remove shadows for cleaner connected look */
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  border-top: 1px solid #444; /* subtle divider between cards */
+  gap: 0.75rem;
+  margin-bottom: 1.25rem;
 }
 
-/* First card gets top-left and top-right rounding */
-.right-panel .card:first-child {
-  border-top-left-radius: 10px;
-  border-top-right-radius: 10px;
-  border-top: none;
-}
-
-/* Last card gets bottom-left and bottom-right rounding */
+/* Remove margin from last card */
 .right-panel .card:last-child {
-  border-bottom-left-radius: 10px;
-  border-bottom-right-radius: 10px;
-  border-bottom: none;
+  margin-bottom: 0;
 }
 
-/* Icon styling */
+/* Remove ::before icons for right panel cards */
 .right-panel .card::before {
-  font-size: 1.4rem;
-  line-height: 1;
-  margin-right: 0.75rem;
+  content: none;
 }
 
-/* Specific icons for each card */
+/* Add inline icons inside cards for clarity */
+#windSpeedCard::before,
+#windDirCard::before,
+#liveTimeCard::before {
+  content: none;
+}
+
+/* Icon text inside cards */
 #windSpeedCard::before {
-  content: "💨";
+  /* no icon here */
 }
 
 #windDirCard::before {
-  content: "🧭";
+  /* no icon here */
 }
 
 #liveTimeCard::before {
-  content: "⏱️";
+  /* no icon here */
 }
+
+/* Instead, add icons in HTML or with flex children, or just text */
 
 /* Text styling inside cards */
 .right-panel .card strong {
@@ -118,29 +112,49 @@ h1 {
   flex-shrink: 0;
 }
 
-/* Value spans aligned right with fixed width for consistent alignment */
-#windSpeedCard span,
-#windDirCard span {
+.right-panel .card span {
   color: #fff;
   font-weight: normal;
-  flex-grow: 0;
+  flex-grow: 1;
   text-align: right;
-  width: 60px;
 }
 
-/* Live Time card - center icon and text horizontally */
+/* Center the Live Time card content horizontally */
 #liveTimeCard {
   justify-content: center;
-  gap: 0.5rem;
 }
 
-/* Live Time text */
 #liveTimeCard strong,
 #liveTimeCard span {
   text-align: center;
-  color: #fff;
-  font-weight: normal;
-  flex-grow: 0;
-  margin: 0;
-  width: auto;
+  flex-grow: unset;
 }
+
+/* Forecast styles */
+.forecast-title {
+  margin-top: 3rem;
+  font-size: 1.5rem;
+  text-align: center; /* Center the forecast title */
+  color: #f9f9f9;
+}
+
+.forecast-container {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+  padding-top: 1rem;
+}
+
+.forecast-day {
+  background-color: #1e1e1e;
+  border-radius: 8px;
+  padding: 1rem;
+  text-align: center;
+  width: 130px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+  color: #eee;
+}
+
+.forecast-day img {
+  width: 48px;
