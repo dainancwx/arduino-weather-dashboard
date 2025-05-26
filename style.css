@@ -125,3 +125,11 @@ h1 {
     width: 90%;
   }
 }
+
+.gray-time {
+  color: #ccc;
+  text-align: center;
+  font-size: 1rem;
+  margin-top: 0.2rem;
+}
+
