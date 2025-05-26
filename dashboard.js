@@ -1,7 +1,7 @@
 // Load latest sensor data from local CSV
 async function loadSensorData() {
   try {
-    const response = await fetch('data/datalog.csv');
+    const response = await fetch('datalog.csv');
     if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
 
     const csvText = await response.text();
@@ -43,10 +43,10 @@ async function loadSensorData() {
 // Fetch 7-day forecast from OpenWeather API
 async function loadForecast() {
   try {
-    const apiKey = 'YOUR_OPENWEATHER_API_KEY';  // replace with your actual API key
+    const apiKey = 'e206db49c3fd97a44f2e622d697c0bd7';  // replace with your actual API key
     const lat = 37.981104412392135;
     const lon = -90.05484322171593;
-    const url = `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&units=imperial&exclude=minutely,hourly,alerts&appid=${apiKey}`;
+    const url = `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&units=imperial&exclude=minutely,hourly,alerts&appid=${e206db49c3fd97a44f2e622d697c0bd7}`;
 
     const response = await fetch(url);
     if (!response.ok) throw new Error(`API error! Status: ${response.status}`);
