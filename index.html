@@ -2,34 +2,73 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>MESONET Weather Dashboard</title>
-  <link rel="stylesheet" href="style.css" />
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #111;
+      color: #eee;
+      margin: 2rem;
+      text-align: center;
+    }
+    .container {
+      display: flex;
+      justify-content: center;
+      gap: 3rem;
+      flex-wrap: wrap;
+    }
+    .panel {
+      background: #222;
+      padding: 1.5rem 2rem;
+      border-radius: 12px;
+      min-width: 280px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+    }
+    .temp {
+      font-size: 3.5rem;
+      color: #00ff88;
+      font-weight: bold;
+    }
+    .label {
+      margin-top: 0.5rem;
+      font-size: 1.2rem;
+      color: #aaa;
+    }
+    .data-item {
+      margin: 0.6rem 0;
+      font-size: 1.1rem;
+    }
+    #lastUpdated {
+      margin-bottom: 2rem;
+      font-size: 1rem;
+      color: #bbb;
+    }
+    #liveTime {
+      margin-top: 1rem;
+      font-size: 1.2rem;
+    }
+  </style>
 </head>
 <body>
+
   <h1>🌤️ MESONET Weather Dashboard</h1>
   <div id="lastUpdated">Last Updated: --</div>
 
   <div class="container">
-    <div class="left-panel">
-      <div class="temperature-display">
-        <div id="tempValue">-- °F</div>
-        <div class="sub-info">
-          <div id="pressureValue">Pressure: -- hPa</div>
-          <div id="humidityValue">Humidity: -- %</div>
-        </div>
-      </div>
+    <div class="panel">
+      <div class="temp" id="tempValue">-- °F</div>
+      <div class="label">Temperature</div>
+      <div class="data-item" id="pressureValue">Pressure: -- hPa</div>
+      <div class="data-item" id="humidityValue">Humidity: -- %</div>
     </div>
 
-    <div class="right-panel">
-      <div class="card" id="windSpeedCard">💨 <strong>Wind Speed:</strong> <span>-</span> mph</div>
-      <div class="card" id="windDirCard">🧭 <strong>Wind Direction:</strong> <span>-</span> °</div>
-      <div class="card" id="liveTimeCard">⏱️ <strong>Live Time:</strong>&nbsp;<span id="liveTime">--:--:--</span></div>
+    <div class="panel">
+      <div class="data-item" id="windSpeedValue">Wind Speed: -- mph</div>
+      <div class="data-item" id="windDirValue">Wind Direction: -- °</div>
+      <div id="liveTime">Live Time: --:--:--</div>
     </div>
   </div>
-
-  <h2 class="forecast-title">7-Day Forecast</h2>
-  <div class="forecast-container" id="forecast"></div>
 
   <script src="dashboard.js"></script>
 </body>
