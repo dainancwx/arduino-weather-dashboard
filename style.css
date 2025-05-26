@@ -69,8 +69,11 @@ h1 {
   box-shadow: 0 4px 8px rgba(0,0,0,0.2);
   display: flex;
   align-items: center;
-  gap: 1rem;
+  gap: 0.75rem;
   margin-bottom: 1.5rem;
+  color: #eee;
+  /* Force items horizontally aligned and vertically centered */
+  justify-content: flex-start;
 }
 
 /* Remove margin from last card */
@@ -78,45 +81,51 @@ h1 {
   margin-bottom: 0;
 }
 
-/* Specific icons for each card */
+/* Specific icons for each card as ::before */
 #windSpeedCard::before {
   content: "💨";
-  font-size: 1.6rem;
+  font-size: 1.5rem;
+  margin-right: 0.75rem;
 }
 
 #windDirCard::before {
   content: "🧭";
-  font-size: 1.6rem;
+  font-size: 1.5rem;
+  margin-right: 0.75rem;
 }
 
 #liveTimeCard::before {
   content: "⏱️";
-  font-size: 1.6rem;
+  font-size: 1.5rem;
+  margin-right: 0.75rem;
 }
 
 /* Text styling inside cards */
 .right-panel .card strong {
   font-weight: bold;
   color: #ccc;
-  flex-shrink: 0;
+  min-width: 110px; /* fixed width for label alignment */
 }
 
 .right-panel .card span {
   color: #fff;
   font-weight: normal;
   flex-grow: 1;
-  text-align: right;
+  text-align: left;
+  /* ensure consistent spacing */
+  margin-left: 0.25rem;
 }
 
-/* Center the Live Time card content horizontally */
+/* Special case: live time card center content */
 #liveTimeCard {
   justify-content: center;
 }
 
 #liveTimeCard strong,
 #liveTimeCard span {
-  text-align: center;
   flex-grow: unset;
+  text-align: center;
+  margin-left: 0;
 }
 
 /* Forecast styles */
