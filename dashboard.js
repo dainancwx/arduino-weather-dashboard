@@ -2,6 +2,7 @@ const API_KEY = "f9c86aa8266a0d5c15d39ad5ca0b6c7e"; // replace with your key
 const LAT = 37.9811;
 const LON = -90.0548;
 
+// Fetch current data from CSV and update dashboard
 async function fetchCurrentData() {
   try {
     const response = await fetch("data/datalog.csv");
@@ -9,23 +10,25 @@ async function fetchCurrentData() {
     const rows = text.trim().split("\n");
     const latest = rows[rows.length - 1].split(",");
 
+    // Assuming CSV columns: timestamp, windSpeed, windDir, hum, pressure, tempC
     const [timestamp, windSpeed, windDir, hum, pressure, tempC] = latest;
 
+    // Convert units
     const windSpeedMph = parseFloat(windSpeed) * 2.237;
     const tempF = (parseFloat(tempC) * 9) / 5 + 32;
 
-    document.querySelector("#windSpeedCard span").textContent = windSpeedMph.toFixed(1);
-    document.querySelector("#windDirCard span").textContent = parseFloat(windDir).toFixed(1);
-    document.querySelector("#tempValue").textContent = `${tempF.toFixed(1)}°F`;
-    document.querySelector("#pressureValue").textContent = `Pressure: ${parseFloat(pressure).toFixed(1)} hPa`;
-    document.querySelector("#humidityValue").textContent = `Humidity: ${parseFloat(hum).toFixed(1)} %`;
+    // Update DOM
+    document.getElementById("windSpeedValue").textContent = windSpeedMph.toFixed(1);
+    document.getElementById("windDirValue").textContent = parseFloat(windDir).toFixed(1);
+    document.getElementById("tempValue").textContent = `${tempF.toFixed(1)}°F`;
+    document.getElementById("pressureValue").textContent = `Pressure: ${parseFloat(pressure).toFixed(1)} hPa`;
+    document.getElementById("humidityValue").textContent = `Humidity: ${parseFloat(hum).toFixed(1)} %`;
 
-    // Update last updated time with AM/PM
+    // Update last updated timestamp (current time with AM/PM)
     const now = new Date();
     let hours = now.getHours();
     const ampm = hours >= 12 ? "PM" : "AM";
-    hours = hours % 12;
-    hours = hours ? hours : 12; // hour 0 = 12
+    hours = hours % 12 || 12; // Convert to 12-hour format
     const cleanTime =
       now.getFullYear() + "-" +
       String(now.getMonth() + 1).padStart(2, "0") + "-" +
@@ -40,9 +43,10 @@ async function fetchCurrentData() {
   }
 }
 
+// Fetch 5-day 3-hour forecast from OpenWeather API and update dashboard
 async function fetchForecast() {
   try {
-    const url = `https://api.openweathermap.org/data/2.5/forecast?lat=${37.9811}&lon=${-90.0548}&units=imperial&appid=${f9c86aa8266a0d5c15d39ad5ca0b6c7e}`;
+    const url = `https://api.openweathermap.org/data/2.5/forecast?lat=${LAT}&lon=${LON}&units=imperial&appid=${API_KEY}`;
     const response = await fetch(url);
     const data = await response.json();
 
@@ -54,37 +58,31 @@ async function fetchForecast() {
       return;
     }
 
-    // Group 3-hour forecasts by day
+    // Group forecasts by date (YYYY-MM-DD)
     const forecastsByDay = {};
-
-    data.list.forEach((item) => {
+    data.list.forEach(item => {
       const date = new Date(item.dt * 1000);
-      const dayKey = date.toISOString().slice(0, 10); // YYYY-MM-DD
-
-      if (!forecastsByDay[dayKey]) {
-        forecastsByDay[dayKey] = [];
-      }
+      const dayKey = date.toISOString().slice(0, 10);
+      if (!forecastsByDay[dayKey]) forecastsByDay[dayKey] = [];
       forecastsByDay[dayKey].push(item);
     });
 
-    // We only want 5 days
+    // Show first 5 days only
     const days = Object.keys(forecastsByDay).slice(0, 5);
 
     days.forEach(dayKey => {
       const dayForecasts = forecastsByDay[dayKey];
-
       const dayName = new Date(dayKey).toLocaleDateString("en-US", { weekday: "short" });
 
-      // Create a container for the day
       const dayDiv = document.createElement("div");
       dayDiv.className = "forecast-day";
 
-      // Day title
+      // Day header
       const dayTitle = document.createElement("div");
       dayTitle.innerHTML = `<strong>${dayName} (${dayKey})</strong>`;
       dayDiv.appendChild(dayTitle);
 
-      // Create 3-hour blocks inside this day
+      // Add 3-hour forecast blocks
       dayForecasts.forEach(item => {
         const date = new Date(item.dt * 1000);
         const timeStr = date.toLocaleTimeString("en-US", { hour: "2-digit", minute: "2-digit", hour12: true });
@@ -116,12 +114,12 @@ async function fetchForecast() {
   }
 }
 
+// Update live clock time every second
 function updateLiveTime() {
   const now = new Date();
   let hours = now.getHours();
   const ampm = hours >= 12 ? "PM" : "AM";
-  hours = hours % 12;
-  hours = hours ? hours : 12;
+  hours = hours % 12 || 12;
   const timeStr =
     hours.toString().padStart(2, "0") + ":" +
     String(now.getMinutes()).padStart(2, "0") + ":" +
@@ -129,12 +127,11 @@ function updateLiveTime() {
   document.getElementById("liveTime").textContent = timeStr;
 }
 
-// Initial load
+// Initial data load and repeated updates
 fetchCurrentData();
 fetchForecast();
 updateLiveTime();
 
-// Set intervals
-setInterval(fetchCurrentData, 5000);  // every 5 seconds
-setInterval(fetchForecast, 600000);   // every 10 minutes
-setInterval(updateLiveTime, 1000);    // every second
+setInterval(fetchCurrentData, 5000);   // update CSV data every 5 sec
+setInterval(fetchForecast, 600000);    // update forecast every 10 min
+setInterval(updateLiveTime, 1000);     // update live time every second
