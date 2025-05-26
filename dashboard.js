@@ -49,30 +49,46 @@ async function fetchForecast() {
     const container = document.getElementById("forecast");
     container.innerHTML = "";
 
-    const selectedForecasts = data.list.filter((_, index) => index % 3 === 0).slice(0, 15); // 5 days × 3 = 15 entries
+    const days = {};
 
-    selectedForecasts.forEach(item => {
-      const time = new Date(item.dt * 1000);
-      const displayTime = time.toLocaleString(undefined, {
-        weekday: "short",
-        hour: "2-digit",
-        minute: "2-digit",
-        hour12: true
+    data.list.forEach(item => {
+      const date = new Date(item.dt * 1000);
+      const dayKey = date.toISOString().split("T")[0];
+
+      if (!days[dayKey]) days[dayKey] = [];
+      days[dayKey].push(item);
+    });
+
+    const slicedDays = Object.keys(days).slice(0, 5);
+    slicedDays.forEach(dayKey => {
+      const group = document.createElement("div");
+      group.className = "forecast-day-group";
+
+      const dayTitle = document.createElement("h3");
+      const readable = new Date(dayKey).toLocaleDateString(undefined, { weekday: "long", month: "short", day: "numeric" });
+      dayTitle.textContent = readable;
+      dayTitle.style.color = "#59a6ff";
+      group.appendChild(dayTitle);
+
+      const row = document.createElement("div");
+      row.className = "forecast-row";
+
+      days[dayKey].forEach(item => {
+        const date = new Date(item.dt * 1000);
+        const time = date.toLocaleTimeString([], { hour: "numeric", minute: "2-digit" });
+
+        const card = document.createElement("div");
+        card.className = "forecast-day";
+        card.innerHTML = `
+          <div>${time}</div>
+          <img src="https://openweathermap.org/img/wn/${item.weather[0].icon}@2x.png" alt="${item.weather[0].description}" />
+          <div>${Math.round(item.main.temp)} °F</div>
+        `;
+        row.appendChild(card);
       });
 
-      const icon = `https://openweathermap.org/img/wn/${item.weather[0].icon}@2x.png`;
-      const temp = Math.round(item.main.temp);
-      const desc = item.weather[0].description;
-
-      const card = document.createElement("div");
-      card.className = "forecast-day";
-      card.innerHTML = `
-        <div>${displayTime}</div>
-        <img src="${icon}" alt="${desc}" title="${desc}" />
-        <div>${temp} °F</div>
-        <div style="font-size: 0.9rem;">${desc}</div>
-      `;
-      container.appendChild(card);
+      group.appendChild(row);
+      container.appendChild(group);
     });
   } catch (err) {
     console.error("Forecast error:", err);
