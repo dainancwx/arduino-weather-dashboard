@@ -6,7 +6,7 @@ async function fetchLatestData() {
 
   const [timestamp, windSpeed, windDir, hum, pressure, temp] = latest;
 
-  const windSpeedMph = parseFloat(windSpeed) * 2.237;
+  const windSpeedMph = parseFloat(windSpeed) * 2.237;  // Convert m/s to mph
 
   document.querySelector("#windSpeedCard span").textContent = windSpeedMph.toFixed(1);
   document.querySelector("#windDirCard span").textContent = parseFloat(windDir).toFixed(1);
@@ -15,8 +15,8 @@ async function fetchLatestData() {
   document.querySelector("#tempCard span").textContent = parseFloat(temp).toFixed(1);
 }
 
-// Call on load
+// Initial call
 fetchLatestData();
 
-// Optional auto-refresh every 10 seconds
+// Update every 10 seconds
 setInterval(fetchLatestData, 10000);
