@@ -4,7 +4,7 @@ const LON = -90.0548;
 
 async function fetchCurrentData() {
   try {
-    const response = await fetch("data/datalog.csv");
+    const response = await fetch("datalog.csv");
     const text = await response.text();
     const rows = text.trim().split("\n");
     const latest = rows[rows.length - 1].split(",");
