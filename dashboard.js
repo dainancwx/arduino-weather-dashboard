@@ -19,11 +19,11 @@ async function fetchLatestData() {
     const windSpeedMph = parseFloat(windSpeed) * 2.237;
 
     // Update dashboard values
-    document.querySelector("#windSpeedCard span").textContent = windSpeedMph.toFixed(1);
-    document.querySelector("#windDirCard span").textContent = parseFloat(windDir).toFixed(1);
+    document.querySelector("#tempCard span").textContent = tempF.toFixed(1);
     document.querySelector("#humidityCard span").textContent = parseFloat(hum).toFixed(1);
     document.querySelector("#pressureCard span").textContent = parseFloat(pressure).toFixed(1);
-    document.querySelector("#tempCard span").textContent = tempF.toFixed(1);
+    document.querySelector("#windSpeedCard span").textContent = windSpeedMph.toFixed(1);
+    document.querySelector("#windDirCard span").textContent = parseFloat(windDir).toFixed(1);
 
     // Update last updated time
     document.querySelector("#lastUpdate").textContent = `Last updated: ${timestamp}`;
