@@ -9,7 +9,7 @@ async function fetchCSV() {
   rows.forEach(row => {
     const cols = row.split(",");
     timestamps.push(cols[0]);
-    windSpeed.push(parseFloat(cols[1]));
+    windSpeed.push(parseFloat(cols[1]) * 2.237); // Convert m/s to mph
     windDir.push(parseFloat(cols[2]));
     hum.push(parseFloat(cols[3]));
     pressure.push(parseFloat(cols[4]));
@@ -84,7 +84,7 @@ function createChart(id, label, labels, data, color) {
 }
 
 fetchCSV().then(({ timestamps, windSpeed, windDir, hum, pressure, temp }) => {
-  createChart('windSpeedChart', 'Wind Speed (m/s)', timestamps, windSpeed, 'blue');
+  createChart('windSpeedChart', 'Wind Speed (mph)', timestamps, windSpeed, 'blue');
   createChart('windDirChart', 'Wind Direction (°)', timestamps, windDir, 'green');
   createChart('humidityChart', 'Humidity (%)', timestamps, hum, 'teal');
   createChart('pressureChart', 'Pressure (hPa)', timestamps, pressure, 'orange');
