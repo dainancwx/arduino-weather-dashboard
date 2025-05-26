@@ -1,84 +1,72 @@
-const API_KEY = 'e206db49c3fd97a44f2e622d697c0bd7'; // Replace with your OpenWeather API key
-const LAT = 37.9811;
-const LON = -90.0548;
-
-async function fetchWeatherData() {
+async function loadWeatherData() {
   try {
-    const response = await fetch(
-      `https://api.openweathermap.org/data/2.5/onecall?lat=${37.981104412392135}&lon=${-90.05484322171593}&exclude=minutely,hourly,alerts&units=imperial&appid=${e206db49c3fd97a44f2e622d697c0bd7}`
-    );
-    const data = await response.json();
+    const response = await fetch('data/datalog.csv');
+    if (!response.ok) {
+      throw new Error(`HTTP error! Status: ${response.status}`);
+    }
+    const csvText = await response.text();
 
-    if (data.cod === 401) {
-      document.getElementById('forecast').innerHTML = `<p style="color:red;">Invalid API key</p>`;
+    // Split rows and remove empty lines
+    const rows = csvText.trim().split('\n').filter(Boolean);
+
+    if (rows.length < 2) {
+      console.warn('CSV has no data rows');
       return;
     }
 
-    const current = data.current;
-    document.getElementById("tempValue").textContent = `${current.temp.toFixed(1)}°F`;
-    document.getElementById("pressureValue").textContent = `Pressure: ${current.pressure} hPa`;
-    document.getElementById("humidityValue").textContent = `Humidity: ${current.humidity}%`;
-    document.querySelector("#windSpeedCard span").textContent = current.wind_speed.toFixed(1);
-    document.querySelector("#windDirCard span").textContent = current.wind_deg.toFixed(0);
+    // First line is headers, get last data row
+    const headers = rows[0].split(',');
+    const latestRow = rows[rows.length - 1].split(',');
 
-    const now = new Date();
-    const hour = now.getHours() % 12 || 12;
-    const ampm = now.getHours() >= 12 ? 'PM' : 'AM';
-    const formatted =
-      now.getFullYear() + "-" +
-      String(now.getMonth() + 1).padStart(2, '0') + "-" +
-      String(now.getDate()).padStart(2, '0') + " " +
-      hour + ":" +
-      String(now.getMinutes()).padStart(2, '0') + ":" +
-      String(now.getSeconds()).padStart(2, '0') + " " + ampm;
+    console.log('CSV Headers:', headers);
+    console.log('Latest data row:', latestRow);
 
-    document.getElementById("lastUpdated").textContent = `Last Updated: ${formatted}`;
+    // Map headers to values for clarity
+    const data = {};
+    headers.forEach((h, i) => data[h.trim()] = latestRow[i].trim());
 
-    renderForecast(data.daily);
+    // Parse values
+    const tempC = parseFloat(data.Temperature) || 0;
+    const tempF = (tempC * 9 / 5) + 32;
+    const pressure = parseFloat(data.Pressure) || 0;
+    const humidity = parseFloat(data.Humidity) || 0;
+    const windSpeed = parseFloat(data.WindSpeed) || 0;
+    const windDirection = parseFloat(data.WindDirection) || 0;
+    const timestamp = data.Timestamp || '';
+
+    // Update DOM
+    document.getElementById('tempValue').textContent = `${tempF.toFixed(1)} °F`;
+    document.getElementById('pressureValue').textContent = `Pressure: ${pressure.toFixed(1)} hPa`;
+    document.getElementById('humidityValue').textContent = `Humidity: ${humidity.toFixed(1)} %`;
+    document.getElementById('windSpeedValue').textContent = `Wind Speed: ${windSpeed.toFixed(1)} mph`;
+    document.getElementById('windDirValue').textContent = `Wind Direction: ${windDirection.toFixed(1)} °`;
+    document.getElementById('lastUpdated').textContent = `Last Updated: ${timestamp}`;
+
   } catch (error) {
-    console.error("Error fetching weather data:", error);
-    document.getElementById("forecast").innerHTML = `<p style="color:red;">Error fetching forecast data.</p>`;
+    console.error('Error loading CSV:', error);
   }
-}
-
-function renderForecast(dailyData) {
-  const forecastContainer = document.getElementById("forecast");
-  forecastContainer.innerHTML = "";
-
-  dailyData.slice(0, 7).forEach((day) => {
-    const date = new Date(day.dt * 1000);
-    const dayName = date.toLocaleDateString("en-US", { weekday: "short" });
-    const icon = day.weather[0].icon;
-    const desc = day.weather[0].description;
-    const max = Math.round(day.temp.max);
-    const min = Math.round(day.temp.min);
-
-    const card = document.createElement("div");
-    card.className = "forecast-day";
-    card.innerHTML = `
-      <div><strong>${dayName}</strong></div>
-      <img src="https://openweathermap.org/img/wn/${icon}@2x.png" alt="${desc}" />
-      <div>${desc}</div>
-      <div>🔺 ${max}°F</div>
-      <div>🔻 ${min}°F</div>
-    `;
-    forecastContainer.appendChild(card);
-  });
 }
 
 function updateLiveTime() {
   const now = new Date();
-  const hour = now.getHours() % 12 || 12;
-  const ampm = now.getHours() >= 12 ? 'PM' : 'AM';
-  const timeStr =
-    String(hour).padStart(2, "0") + ":" +
-    String(now.getMinutes()).padStart(2, "0") + ":" +
-    String(now.getSeconds()).padStart(2, "0") + " " + ampm;
-  document.getElementById("liveTime").textContent = timeStr;
+
+  // Format time with AM/PM
+  let hours = now.getHours();
+  const ampm = hours >= 12 ? 'PM' : 'AM';
+  hours = hours % 12 || 12; // Convert 0 to 12 for 12-hour format
+  const minutes = String(now.getMinutes()).padStart(2, '0');
+  const seconds = String(now.getSeconds()).padStart(2, '0');
+
+  const timeString = `${hours}:${minutes}:${seconds} ${ampm}`;
+  document.getElementById('liveTime').textContent = `Live Time: ${timeString}`;
 }
 
-// Initialize
-fetchWeatherData();
+// Initial load
+loadWeatherData();
 updateLiveTime();
-setInterval(fetchWeatherData, 10000); // every 10 sec
-setInterval(updateLiveTime, 1000);    // every second
+
+// Refresh weather data every 5 seconds
+setInterval(loadWeatherData, 5000);
+
+// Update live clock every second
+setInterval(updateLiveTime, 1000);
