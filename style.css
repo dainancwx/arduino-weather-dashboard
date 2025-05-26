@@ -1,3 +1,4 @@
+/* Reset & Base */
 body {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   background-color: #111;
@@ -6,30 +7,38 @@ body {
   padding: 2rem;
 }
 
-h1 {
+header {
   text-align: center;
-  font-size: 2rem;
-}
-
-#lastUpdated {
-  text-align: center;
-  font-size: 0.95rem;
-  color: #ccc;
   margin-bottom: 2rem;
 }
 
+h1 {
+  font-size: 2.2rem;
+  margin: 0;
+}
+
+#lastUpdated {
+  font-size: 1rem;
+  color: #aaa;
+  margin-top: 0.3rem;
+}
+
+/* Container for left + right panels */
 .container {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
   gap: 2rem;
+  margin-bottom: 3rem;
 }
 
+/* Panels */
 .left-panel, .right-panel {
-  flex: 1 1 300px;
+  flex: 1 1 320px;
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
+  max-width: 420px;
 }
 
 /* Temperature Box */
@@ -43,27 +52,29 @@ h1 {
 }
 
 #tempValue {
-  font-size: 3rem;
+  font-size: 3.8rem;
   font-weight: bold;
   color: #00ff88;
 }
 
 .sub-info {
   margin-top: 1rem;
-  font-size: 1rem;
+  font-size: 1.2rem;
   color: #aaa;
 }
 
+/* Cards */
 .card {
   background-color: #222;
   border-left: 5px solid #4a90e2;
   border-radius: 10px;
-  padding: 1.2rem;
-  font-size: 1.1rem;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  padding: 1.2rem 1.5rem;
+  font-size: 1.2rem;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.25);
   display: flex;
   justify-content: space-between;
   align-items: center;
+  min-height: 60px;
 }
 
 .card span {
@@ -71,11 +82,11 @@ h1 {
   color: #fff;
 }
 
-/* Forecast Styles */
+/* Forecast */
 .forecast-title {
-  margin-top: 3rem;
-  font-size: 1.5rem;
+  font-size: 1.6rem;
   text-align: center;
+  margin-bottom: 1rem;
 }
 
 .forecast-container {
@@ -83,19 +94,28 @@ h1 {
   justify-content: center;
   flex-wrap: wrap;
   gap: 1rem;
-  padding-top: 1rem;
+  padding-top: 0.5rem;
 }
 
 .forecast-day {
   background-color: #1e1e1e;
   border-radius: 8px;
-  padding: 1rem;
+  padding: 1rem 1.2rem;
   text-align: center;
-  width: 130px;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+  width: 140px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.4);
+  color: #ddd;
+  font-size: 0.95rem;
+}
+
+.forecast-day strong {
+  font-size: 1.1rem;
+  margin-bottom: 6px;
+  display: block;
 }
 
 .forecast-day img {
   width: 48px;
   height: 48px;
+  margin: 8px 0;
 }
