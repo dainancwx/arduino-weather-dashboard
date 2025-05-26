@@ -9,25 +9,27 @@
 <body>
   <div class="container">
     <div class="left-panel">
-      <div class="temperature" id="temperature">-- °F</div>
-      <div class="label">Current Temperature</div>
-      <div class="detail" id="humidity">Humidity: --%</div>
-      <div class="detail" id="pressure">Pressure: -- hPa</div>
+      <div id="datetime" class="datetime"></div>
+      <div class="temperature-display">
+        <div id="temperature" class="temperature">--°F</div>
+        <div class="label">Current Temperature</div>
+        <div class="metric">Humidity: <span id="humidity">--%</span></div>
+        <div class="metric">Pressure: <span id="pressure">-- hPa</span></div>
+      </div>
     </div>
     <div class="right-panel">
-      <div class="info-card">
-        <div class="label">Wind Speed</div>
-        <div class="value" id="windSpeed">-- mph</div>
+      <div class="card">
+        <span>Wind Speed</span>
+        <span id="windSpeed">--</span> <span>mph</span>
       </div>
-      <div class="info-card">
-        <div class="label">Wind Direction</div>
-        <div class="value" id="windDirection">--°</div>
+      <div class="card">
+        <span>Wind Direction</span>
+        <span id="windDirection">--°</span>
       </div>
-      <div class="info-card">
-        <div class="label">Last Updated</div>
-        <div class="value" id="lastUpdated">--</div>
+      <div class="card">
+        <span>Last Updated</span>
+        <span id="lastUpdated">--</span>
       </div>
-      <div id="datetime" class="datetime"></div>
     </div>
   </div>
   <script src="dashboard.js"></script>
