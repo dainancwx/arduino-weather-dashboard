@@ -7,17 +7,24 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
+  <h1>🌤️ MESONET Weather Dashboard</h1>
+  <div id="lastUpdated">Last Updated: --</div>
+
   <div class="container">
     <div class="left-panel">
-      <h1>🌤️ MESONET Dashboard</h1>
-      <div id="lastUpdated">Last Updated: --</div>
-      <div class="card" id="tempCard">🌡️ <strong>Temperature:</strong> <span>-</span> °F</div>
+      <div class="temperature-display">
+        <div id="tempValue">--</div>
+        <div class="sub-info">
+          <div id="pressureValue">Pressure: -- hPa</div>
+          <div id="humidityValue">Humidity: -- %</div>
+        </div>
+      </div>
     </div>
+
     <div class="right-panel">
       <div class="card" id="windSpeedCard">💨 <strong>Wind Speed:</strong> <span>-</span> mph</div>
       <div class="card" id="windDirCard">🧭 <strong>Wind Direction:</strong> <span>-</span> °</div>
-      <div class="card" id="humidityCard">💧 <strong>Humidity:</strong> <span>-</span> %</div>
-      <div class="card" id="pressureCard">📈 <strong>Pressure:</strong> <span>-</span> hPa</div>
+      <div class="card" id="liveTimeCard">⏱️ <strong>Live Time:</strong> <span id="liveTime">--:--:--</span></div>
     </div>
   </div>
 
