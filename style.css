@@ -8,8 +8,9 @@ body {
 .dashboard {
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-around;
+  justify-content: space-between; /* from "space-around" */
   padding: 2rem;
+  gap: 2rem; /* 🔥 This adds space between columns */
   max-width: 1200px;
   margin: auto;
 }
@@ -18,7 +19,7 @@ body {
   flex: 1 1 40%;
   background: #222;
   padding: 2rem;
-  border-radius: 1rem;
+  border-radius: 1.25rem;
   box-shadow: 0 0 20px rgba(0,0,0,0.4);
   margin-bottom: 2rem;
 }
