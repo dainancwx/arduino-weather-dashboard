@@ -2,18 +2,16 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>MESONET Weather Dashboard</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <header>
-    <h1>🌤️ MESONET Weather Dashboard</h1>
-    <div id="lastUpdated">Last Updated: --</div>
-  </header>
+  <h1>🌤️ MESONET Weather Dashboard</h1>
+  <div id="lastUpdated">Last Updated: --</div>
 
-  <main class="container">
-    <section class="left-panel">
+  <div class="container">
+    <div class="left-panel">
       <div class="temperature-display">
         <div id="tempValue">-- °F</div>
         <div class="sub-info">
@@ -21,14 +19,14 @@
           <div id="humidityValue">Humidity: -- %</div>
         </div>
       </div>
-    </section>
+    </div>
 
-    <section class="right-panel">
+    <div class="right-panel">
       <div class="card" id="windSpeedCard">💨 <strong>Wind Speed:</strong> <span>-</span> mph</div>
       <div class="card" id="windDirCard">🧭 <strong>Wind Direction:</strong> <span>-</span> °</div>
-      <div class="card" id="liveTimeCard">⏱️ <strong>Live Time:</strong> <span id="liveTime">--:--:-- AM</span></div>
-    </section>
-  </main>
+      <div class="card" id="liveTimeCard">⏱️ <strong>Live Time:</strong> <span id="liveTime">--:--:--</span></div>
+    </div>
+  </div>
 
   <h2 class="forecast-title">7-Day Forecast</h2>
   <div class="forecast-container" id="forecast"></div>
