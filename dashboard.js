@@ -90,4 +90,4 @@ async function updateDashboard() {
 updateDashboard();
 setInterval(fetchCurrentData, 5000);
 setInterval(updateLiveTime, 1000);
-setInterval(fetchForecast, 30000);
+setInterval(fetchForecast, 10000);
