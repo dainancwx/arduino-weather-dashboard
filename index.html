@@ -10,14 +10,19 @@
   <h1>MESONET Weather Dashboard</h1>
 
   <div class="dashboard">
-    <div class="card" id="windSpeedCard">🌬️ <strong>Wind Speed:</strong> <span>-</span> mph</div>
-    <div class="card" id="windDirCard">🧭 <strong>Wind Direction:</strong> <span>-</span> °</div>
-    <div class="card" id="humidityCard">💧 <strong>Humidity:</strong> <span>-</span> %</div>
-    <div class="card" id="pressureCard">📈 <strong>Pressure:</strong> <span>-</span> hPa</div>
-    <div class="card" id="tempCard">🌡️ <strong>Temperature:</strong> <span>-</span> °F</div>
-  </div>
+    <div class="main-temp">
+      <div class="temp-big" id="tempCard"><span>-</span> °F</div>
+      <div class="label">Current Temperature</div>
+      <div class="extra">Humidity: <span id="humidityCard"><span>-</span> %</span></div>
+      <div class="extra">Pressure: <span id="pressureCard"><span>-</span> hPa</span></div>
+    </div>
 
-  <p id="lastUpdate" style="text-align: center; margin-top: 1rem;">Last updated: --</p>
+    <div class="side-info">
+      <div class="card"><strong>Wind Speed:</strong> <span id="windSpeedCard"><span>-</span> mph</span></div>
+      <div class="card"><strong>Wind Direction:</strong> <span id="windDirCard"><span>-</span> °</span></div>
+      <div class="card"><strong>Updated:</strong> <span id="lastUpdate">--</span></div>
+    </div>
+  </div>
 
   <script src="dashboard.js"></script>
 </body>
