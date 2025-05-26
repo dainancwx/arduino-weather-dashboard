@@ -1,4 +1,4 @@
-const API_KEY = "your_api_key_here"; // Replace with your actual key
+const API_KEY = "f9c86aa8266a0d5c15d39ad5ca0b6c7e"; // Replace with your actual key
 const LAT = 37.9811;
 const LON = -90.0548;
 
@@ -38,7 +38,8 @@ async function fetchCurrentData() {
 
 async function fetchForecast() {
   try {
-    const response = await fetch(`https://api.openweathermap.org/data/2.5/forecast?lat=${LAT}&lon=${LON}&units=imperial&appid=${API_KEY}`);
+    const response = await fetch(`https://api.openweathermap.org/data/2.5/forecast?lat=${37.9811}&lon=${-90.0548}&units=imperial&appid=${f9c86aa8266a0d5c15d39ad5ca0b6c7e}`);
+    
     const data = await response.json();
 
     const forecastEl = document.getElementById("forecast");
