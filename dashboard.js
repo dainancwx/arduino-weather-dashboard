@@ -1,6 +1,6 @@
 async function fetchLatestData() {
   try {
-    const response = await fetch("data/datalog.csv");
+    const response = await fetch("datalog.csv");
     const text = await response.text();
 
     // Clean and parse rows
