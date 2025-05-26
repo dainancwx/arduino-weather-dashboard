@@ -6,30 +6,17 @@ function degreesToCompass(deg) {
 fetch('datalog.csv')
   .then(response => response.text())
   .then(data => {
-    const rows = data.trim().split('\n');
-    const latest = rows[1]?.split(',');
+    const lines = data.trim().split('\n');
+    const lastLine = lines[lines.length - 1];
+    const [timestamp, temperature, humidity, pressure, windSpeed, windDirection] = lastLine.split(',');
 
-    if (!latest || latest.length < 6) return;
-
-    const [timestamp, temp, humidity, pressure, windSpeed, windDir] = latest;
-
-    document.getElementById('temperature').innerHTML =
-      isNaN(temp) ? '-- °F' : `${parseFloat(temp).toFixed(1)}°F`;
-
-    document.getElementById('humidity').textContent =
-      isNaN(humidity) ? 'Humidity: --%' : `Humidity: ${parseFloat(humidity).toFixed(1)}%`;
-
-    document.getElementById('pressure').textContent =
-      isNaN(pressure) ? 'Pressure: -- hPa' : `Pressure: ${parseFloat(pressure).toFixed(1)} hPa`;
-
-    document.getElementById('windSpeed').textContent =
-      isNaN(windSpeed) ? '--' : `${parseFloat(windSpeed).toFixed(1)}`;
-
-    document.getElementById('windDirection').textContent =
-      isNaN(windDir) ? '--' : `${parseFloat(windDir)}° (${degreesToCompass(windDir)})`;
-
-    document.getElementById('lastUpdated').textContent = timestamp || '--';
+    document.getElementById('temperature').innerText = `${temperature}°F`;
+    document.getElementById('humidity').innerText = `Humidity: ${humidity}%`;
+    document.getElementById('pressure').innerText = `Pressure: ${pressure} hPa`;
+    document.getElementById('windSpeed').innerText = `${windSpeed} mph`;
+    document.getElementById('windDirection').innerText = `${windDirection}°`;
+    document.getElementById('lastUpdated').innerText = timestamp;
   })
-  .catch(error => {
-    console.error('Failed to load CSV:', error);
+  .catch(err => {
+    console.error('Error loading data:', err);
   });
