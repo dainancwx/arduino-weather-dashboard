@@ -1,15 +1,12 @@
 async function loadWeatherData() {
   try {
-    // Prevent browser cache for fresh data
-    const response = await fetch('datalog.csv', { cache: "no-store" });
+    const response = await fetch('datalog.csv', { cache: 'no-store' });
     const text = await response.text();
     const lines = text.trim().split('\n');
 
-    // Skip header line and get last data line
-    if (lines.length < 2) return; // no data yet
-    const latest = lines[lines.length - 1];
+    if (lines.length < 2) return; // No data yet
 
-    // CSV columns: Timestamp,Temperature,Humidity,Pressure,WindSpeed,WindDirection
+    const latest = lines[lines.length - 1];
     const [timestamp, tempF, humidity, pressure, windSpeed, windDirection] = latest.split(',');
 
     document.getElementById('temperature').textContent = `${parseFloat(tempF).toFixed(1)}°F`;
@@ -25,19 +22,20 @@ async function loadWeatherData() {
 
 function updateClock() {
   const now = new Date();
-  const timestamp = now.getFullYear() + '-' +
-                    String(now.getMonth() + 1).padStart(2, '0') + '-' +
-                    String(now.getDate()).padStart(2, '0') + ' ' +
-                    String(now.getHours()).padStart(2, '0') + ':' +
-                    String(now.getMinutes()).padStart(2, '0') + ':' +
-                    String(now.getSeconds()).padStart(2, '0');
-  document.getElementById('liveClock').textContent = `Current Time: ${timestamp}`;
+
+  // Format date as YYYY-MM-DD
+  const datePart = now.toLocaleDateString('en-CA'); // 'en-CA' formats as YYYY-MM-DD
+
+  // Format time as HH:MM:SS 24-hour format, local time
+  const timePart = now.toLocaleTimeString('en-GB', { hour12: false });
+
+  document.getElementById('liveClock').textContent = `Current Time: ${datePart} ${timePart}`;
 }
 
-// Initial load
+// Initial calls
 loadWeatherData();
 updateClock();
 
-// Refresh every 30 seconds and 1 second respectively
-setInterval(loadWeatherData, 30000);
-setInterval(updateClock, 1000);
+// Refresh intervals
+setInterval(loadWeatherData, 5000); // every 30 seconds
+setInterval(updateClock, 1000);       // every 1 second
