@@ -1,62 +1,63 @@
-/* General Styling */
+/* style.css */
 body {
-  margin: 0;
-  padding: 2rem;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   background-color: #111;
-  color: #fff;
+  color: #eee;
+  font-family: 'Segoe UI', sans-serif;
+  margin: 0;
+  padding: 40px;
 }
 
-/* Layout */
-.dashboard {
+.container {
   display: flex;
-  gap: 2rem;
   flex-wrap: wrap;
+  gap: 40px;
   justify-content: center;
   align-items: flex-start;
 }
 
-/* Card Style */
-.panel {
-  background-color: #1e1e1e;
-  border-radius: 1rem;
-  padding: 2rem;
-  box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
-  flex: 1 1 300px;
-  max-width: 400px;
+.left-panel {
+  background-color: #222;
+  padding: 40px;
+  border-radius: 15px;
+  text-align: center;
+  min-width: 300px;
+  flex: 1;
 }
 
-/* Temperature Display */
-#temperature {
+.left-panel h1 {
   font-size: 4rem;
-  font-weight: bold;
   color: #00ff99;
   margin: 0;
 }
 
-.panel p {
+.left-panel p {
+  margin: 10px 0;
   font-size: 1.2rem;
-  margin: 0.5rem 0;
 }
 
-/* Label Section on Right */
-.data-label {
+.right-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  flex: 1;
+  min-width: 300px;
+}
+
+.card {
+  background-color: #222;
+  padding: 30px;
+  border-radius: 15px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  font-size: 1.2rem;
 }
 
-/* Wind Cards */
-.wind-card {
-  background-color: #1e1e1e;
-  border-radius: 1rem;
-  padding: 1.5rem;
-  margin-bottom: 1rem;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+.card h2 {
+  margin: 0;
+  font-size: 1.3rem;
 }
 
-/* Optional Hover for Cards */
-.panel:hover, .wind-card:hover {
-  background-color: #252525;
+.card span {
+  font-size: 1.3rem;
+  color: #eee;
 }
