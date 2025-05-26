@@ -33,4 +33,4 @@ loadWeatherData();
 setInterval(loadWeatherData, 30000);
 
 updateClock();
-setInterval(updateClock, 1000);
+setInterval(updateClock, 0500);
