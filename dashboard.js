@@ -3,25 +3,32 @@ async function fetchLatestData() {
     const response = await fetch("data/datalog.csv");
     const text = await response.text();
     const rows = text.trim().split("\n");
-    if (rows.length < 2) throw new Error("No data");
 
-    const latest = rows[rows.length - 1].split(",");
+    if (rows.length < 2) throw new Error("Not enough data");
 
-    const [timestamp, windSpeed, windDir, humidity, pressure, tempC] = latest;
+    const headers = rows[0].split(",").map(h => h.trim());
+    const latestRow = rows[rows.length - 1].split(",").map(val => val.trim());
 
-    const tempF = parseFloat(tempC) * 9/5 + 32;
-    const windMph = parseFloat(windSpeed) * 2.237;
+    const data = {};
+    headers.forEach((h, i) => {
+      data[h] = latestRow[i];
+    });
+
+    // Fallback if columns missing
+    const tempC = parseFloat(data["Temperature"] || data["Temp"] || 0);
+    const tempF = (tempC * 9 / 5) + 32;
+
+    const windSpeedMps = parseFloat(data["WindSpeed"] || data["Wind"] || 0);
+    const windMph = windSpeedMps * 2.237;
 
     document.getElementById("tempVal").textContent = tempF.toFixed(1);
-    document.getElementById("humidityVal").textContent = parseFloat(humidity).toFixed(1);
-    document.getElementById("pressureVal").textContent = parseFloat(pressure).toFixed(1);
+    document.getElementById("humidityVal").textContent = parseFloat(data["Humidity"] || 0).toFixed(1);
+    document.getElementById("pressureVal").textContent = parseFloat(data["Pressure"] || 0).toFixed(1);
     document.getElementById("windSpeedVal").textContent = windMph.toFixed(1);
-    document.getElementById("windDirVal").textContent = parseFloat(windDir).toFixed(1);
-    document.getElementById("lastUpdate").textContent = timestamp;
+    document.getElementById("windDirVal").textContent = parseFloat(data["WindDirection"] || 0).toFixed(1);
+    document.getElementById("lastUpdate").textContent = data["Timestamp"] || "--";
+
   } catch (err) {
-    console.error("Data fetch error:", err);
+    console.error("Error parsing CSV:", err);
   }
 }
-
-fetchLatestData();
-setInterval(fetchLatestData, 10000);
