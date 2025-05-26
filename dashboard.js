@@ -11,9 +11,7 @@ async function fetchCurrentData() {
 
     const [timestamp, windSpeed, windDir, hum, pressure, tempF] = latest;
 
-    const windSpeedMph = parseFloat(windSpeed) * 2.237;
-
-    document.querySelector("#windSpeedValue").textContent = `${windSpeedMph.toFixed(1)} mph`;
+    document.querySelector("#windSpeedValue").textContent = `${(parseFloat(windSpeed) * 2.237).toFixed(1)} mph`;
     document.querySelector("#windDirValue").textContent = `${parseFloat(windDir).toFixed(1)} °`;
     document.querySelector("#tempValue").textContent = `${parseFloat(tempF).toFixed(1)}°F`;
     document.querySelector("#pressureValue").textContent = `Pressure: ${parseFloat(pressure).toFixed(1)} hPa`;
@@ -29,7 +27,6 @@ async function fetchCurrentData() {
       second: "2-digit",
       hour12: true
     });
-
     document.getElementById("lastUpdated").textContent = `Last Updated: ${cleanTime}`;
   } catch (err) {
     console.error("Error loading current data:", err);
@@ -51,7 +48,6 @@ async function fetchForecast() {
     }
 
     const forecastsByDay = {};
-
     data.list.forEach(item => {
       const date = new Date(item.dt * 1000);
       const dayKey = date.toISOString().slice(0, 10);
@@ -62,19 +58,21 @@ async function fetchForecast() {
     const days = Object.keys(forecastsByDay).slice(0, 5);
 
     days.forEach(dayKey => {
-      const dayForecasts = forecastsByDay[dayKey];
-      const dayName = new Date(dayKey).toLocaleDateString("en-US", { weekday: "short" });
-
       const dayDiv = document.createElement("div");
       dayDiv.className = "forecast-day";
 
-      const dayTitle = document.createElement("div");
-      dayTitle.innerHTML = `<strong>${dayName} (${dayKey})</strong>`;
-      dayDiv.appendChild(dayTitle);
+      const dayName = new Date(dayKey).toLocaleDateString("en-US", { weekday: "short" });
+      const title = document.createElement("div");
+      title.innerHTML = `<strong>${dayName} (${dayKey})</strong>`;
+      dayDiv.appendChild(title);
 
-      dayForecasts.forEach(item => {
+      forecastsByDay[dayKey].forEach(item => {
         const date = new Date(item.dt * 1000);
-        const timeStr = date.toLocaleTimeString("en-US", { hour: "2-digit", minute: "2-digit", hour12: true });
+        const timeStr = date.toLocaleTimeString("en-US", {
+          hour: "2-digit",
+          minute: "2-digit",
+          hour12: true
+        });
         const temp = Math.round(item.main.temp);
         const icon = item.weather[0].icon;
         const description = item.weather[0].description;
@@ -98,33 +96,35 @@ async function fetchForecast() {
       forecastContainer.appendChild(dayDiv);
     });
   } catch (err) {
-    console.error("Error loading forecast:", err);
-    document.getElementById("forecast").textContent = "Failed to load forecast.";
+    console.error("Error loading forecast data:", err);
+    document.getElementById("forecast").textContent = "Failed to load forecast data.";
   }
 }
 
 function updateTimeDisplays() {
   const now = new Date();
 
-  // Local
+  // Local Time
   const localTime = now.toLocaleTimeString("en-US", {
-    hour: "2-digit", minute: "2-digit", second: "2-digit", hour12: false
+    hour: "2-digit",
+    minute: "2-digit",
+    second: "2-digit",
+    hour12: false
   });
 
-  // Zulu (UTC)
-  const zulu = new Date(now.toISOString());
-  const zuluTime = zulu.toUTCString().match(/\d{2}:\d{2}:\d{2}/)[0];
+  // Zulu Time
+  const zuluTime = now.toUTCString().match(/\d{2}:\d{2}:\d{2}/)[0];
 
   document.getElementById("liveTime").textContent = localTime;
   document.getElementById("zuluTime").textContent = `${zuluTime} UTC`;
 }
 
-// Initial load
+// Load data
 fetchCurrentData();
 fetchForecast();
 updateTimeDisplays();
 
-// Set intervals
+// Refresh intervals
 setInterval(fetchCurrentData, 5000);
 setInterval(fetchForecast, 600000);
 setInterval(updateTimeDisplays, 1000);
