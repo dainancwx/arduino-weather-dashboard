@@ -31,7 +31,7 @@ h1 {
 /* Left and Right panels */
 .left-panel,
 .right-panel {
-  flex: 1 1 300px;
+  flex: 1 1 320px;
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
@@ -42,35 +42,35 @@ h1 {
   background-color: #222;
   border-left: 6px solid #00ff88;
   border-radius: 12px;
-  padding: 2rem;
+  padding: 2.5rem 2rem;
   text-align: center;
   box-shadow: 0 4px 10px rgba(0,0,0,0.3);
 }
 
 #tempValue {
-  font-size: 3rem;
+  font-size: 3.5rem;
   font-weight: bold;
   color: #00ff88;
 }
 
 .sub-info {
-  margin-top: 1rem;
-  font-size: 1rem;
+  margin-top: 1.25rem;
+  font-size: 1.1rem;
   color: #aaa;
 }
 
 /* Cards on right panel */
 .right-panel .card {
   background-color: #222;
-  border-left: none;  /* Removed blue line here */
+  border-left: 5px solid #4a90e2;
   border-radius: 10px;
-  padding: 1rem 1.5rem;
-  font-size: 1.1rem;
+  padding: 1.25rem 1.75rem;
+  font-size: 1.2rem;
   box-shadow: 0 4px 8px rgba(0,0,0,0.2);
   display: flex;
   align-items: center;
-  gap: 0.75rem;
-  margin-bottom: 1.25rem;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
 }
 
 /* Remove margin from last card */
@@ -78,32 +78,21 @@ h1 {
   margin-bottom: 0;
 }
 
-/* Remove ::before icons for right panel cards */
-.right-panel .card::before {
-  content: none;
-}
-
-/* Add inline icons inside cards for clarity */
-#windSpeedCard::before,
-#windDirCard::before,
-#liveTimeCard::before {
-  content: none;
-}
-
-/* Icon text inside cards */
+/* Specific icons for each card */
 #windSpeedCard::before {
-  /* no icon here */
+  content: "💨";
+  font-size: 1.6rem;
 }
 
 #windDirCard::before {
-  /* no icon here */
+  content: "🧭";
+  font-size: 1.6rem;
 }
 
 #liveTimeCard::before {
-  /* no icon here */
+  content: "⏱️";
+  font-size: 1.6rem;
 }
-
-/* Instead, add icons in HTML or with flex children, or just text */
 
 /* Text styling inside cards */
 .right-panel .card strong {
@@ -133,28 +122,59 @@ h1 {
 /* Forecast styles */
 .forecast-title {
   margin-top: 3rem;
-  font-size: 1.5rem;
-  text-align: center; /* Center the forecast title */
-  color: #f9f9f9;
+  font-size: 1.6rem;
+  text-align: center;
+  margin-bottom: 1rem;
 }
 
 .forecast-container {
   display: flex;
   justify-content: center;
-  flex-wrap: wrap;
-  gap: 1rem;
+  flex-wrap: nowrap; /* Keep in one horizontal row */
+  gap: 1.5rem;
   padding-top: 1rem;
+  overflow-x: auto; /* Scroll horizontally if needed */
 }
 
+/* Each day box */
 .forecast-day {
   background-color: #1e1e1e;
-  border-radius: 8px;
-  padding: 1rem;
+  border-radius: 10px;
+  padding: 1.5rem 1.25rem;
   text-align: center;
-  width: 130px;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+  width: 180px; /* wider box for more content */
+  box-shadow: 0 2px 8px rgba(0,0,0,0.4);
   color: #eee;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+  user-select: none;
 }
 
+/* Forecast day title */
+.forecast-day > div:first-child {
+  font-weight: 600;
+  font-size: 1.1rem;
+  margin-bottom: 0.5rem;
+}
+
+/* Each 3-hour block inside day */
+.forecast-day > div:not(:first-child) {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 1rem;
+  gap: 0.5rem;
+  text-transform: capitalize;
+  padding: 0.2rem 0;
+}
+
+/* Weather icons */
 .forecast-day img {
-  width: 48px;
+  width: 44px;
+  height: 44px;
+  flex-shrink: 0;
+  margin: 0 0.25rem;
+}
