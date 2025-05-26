@@ -9,11 +9,12 @@ body {
 h1 {
   text-align: center;
   font-size: 2rem;
+  margin-bottom: 0.25rem;
 }
 
 #lastUpdated {
   text-align: center;
-  font-size: 0.95rem;
+  font-size: 1rem;
   color: #ccc;
   margin-bottom: 2rem;
 }
@@ -25,8 +26,8 @@ h1 {
   gap: 2rem;
 }
 
-.left-panel {
-  flex: 1 1 300px;
+.left-panel, .right-panel {
+  flex: 1 1 320px;
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
@@ -50,45 +51,26 @@ h1 {
 
 .sub-info {
   margin-top: 1rem;
-  font-size: 1rem;
+  font-size: 1.1rem;
   color: #aaa;
 }
 
-/* Right panel container - connected cards */
-.right-panel {
-  max-width: 420px;
+/* Right Panel Cards */
+.card {
   background-color: #222;
-  border-radius: 12px;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-  display: flex;
-  flex-direction: column;
-  gap: 0; /* no gap to connect cards */
-  overflow: hidden;
-}
-
-/* Cards inside right panel */
-.right-panel .card {
-  border-left: none;
-  border-radius: 0;
-  padding: 1rem 1.5rem;
+  border-left: 5px solid #4a90e2;
+  border-radius: 10px;
+  padding: 1.2rem 1.5rem;
   font-size: 1.2rem;
-  box-shadow: none;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
   display: flex;
   justify-content: space-between;
   align-items: center;
-  min-height: 60px;
-  background-color: transparent;
+}
+
+.card span {
+  font-weight: bold;
   color: #fff;
-  border-bottom: 1px solid #444;
-}
-
-.right-panel .card:last-child {
-  border-bottom: none;
-  border-radius: 0 0 12px 12px;
-}
-
-.right-panel .card strong {
-  margin-left: 0.3rem;
 }
 
 /* Forecast Styles */
@@ -113,9 +95,11 @@ h1 {
   text-align: center;
   width: 130px;
   box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+  color: #eee;
 }
 
 .forecast-day img {
   width: 48px;
   height: 48px;
+  margin: 0.25rem 0;
 }
