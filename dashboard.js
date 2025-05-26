@@ -1,98 +1,84 @@
-// Fetch and update current weather data from your CSV
-async function fetchCurrentData() {
+const API_KEY = 'YOUR_API_KEY'; // Replace with your OpenWeather API key
+const LAT = 37.9811;
+const LON = -90.0548;
+
+async function fetchWeatherData() {
   try {
-    const response = await fetch("data/datalog.csv");
-    const text = await response.text();
-    const rows = text.trim().split("\n");
-
-    // Skip header row, get latest data row
-    const latest = rows[rows.length - 1].split(",");
-
-    // Your CSV order: Timestamp,WindSpeed,WindDirection,Humidity,Pressure,TempC
-    // Adjust as needed based on your actual CSV columns
-    const [timestamp, windSpeedRaw, windDirRaw, humRaw, pressureRaw, tempCRaw] = latest;
-
-    const windSpeedMph = parseFloat(windSpeedRaw) * 2.237; // m/s to mph
-    const tempF = (parseFloat(tempCRaw) * 9) / 5 + 32;
-
-    document.querySelector("#windSpeedCard span").textContent = windSpeedMph.toFixed(1);
-    document.querySelector("#windDirCard span").textContent = parseFloat(windDirRaw).toFixed(1);
-    document.querySelector("#tempValue").textContent = `${tempF.toFixed(1)}°F`;
-    document.querySelector("#pressureValue").textContent = `Pressure: ${parseFloat(pressureRaw).toFixed(1)} hPa`;
-    document.querySelector("#humidityValue").textContent = `Humidity: ${parseFloat(humRaw).toFixed(1)} %`;
-
-    document.getElementById("lastUpdated").textContent = `Last Updated: ${timestamp}`;
-  } catch (err) {
-    console.error("Error fetching current weather data:", err);
-  }
-}
-
-// Fetch 7-day forecast from OpenWeatherMap One Call API
-async function fetchForecast() {
-  try {
-    const url = "https://api.openweathermap.org/data/3.0/onecall?lat=37.981104412392135&lon=-90.05484322171593&units=imperial&exclude=minutely,hourly,alerts&appid=2fe133a6e5b09ccbe9f844e3b7164ee0";
-    const response = await fetch(url);
+    const response = await fetch(
+      `https://api.openweathermap.org/data/2.5/onecall?lat=${LAT}&lon=${LON}&exclude=minutely,hourly,alerts&units=imperial&appid=${API_KEY}`
+    );
     const data = await response.json();
 
-    if (!data.daily || data.daily.length === 0) {
-      document.getElementById("forecast").innerHTML = "<p>No forecast data available</p>";
+    if (data.cod === 401) {
+      document.getElementById('forecast').innerHTML = `<p style="color:red;">Invalid API key</p>`;
       return;
     }
 
-    const forecastContainer = document.getElementById("forecast");
-    forecastContainer.innerHTML = "";
+    const current = data.current;
+    document.getElementById("tempValue").textContent = `${current.temp.toFixed(1)}°F`;
+    document.getElementById("pressureValue").textContent = `Pressure: ${current.pressure} hPa`;
+    document.getElementById("humidityValue").textContent = `Humidity: ${current.humidity}%`;
+    document.querySelector("#windSpeedCard span").textContent = current.wind_speed.toFixed(1);
+    document.querySelector("#windDirCard span").textContent = current.wind_deg.toFixed(0);
 
-    data.daily.slice(0, 7).forEach((dayData) => {
-      const date = new Date(dayData.dt * 1000);
-      const dayName = date.toLocaleDateString("en-US", { weekday: "short" });
+    const now = new Date();
+    const hour = now.getHours() % 12 || 12;
+    const ampm = now.getHours() >= 12 ? 'PM' : 'AM';
+    const formatted =
+      now.getFullYear() + "-" +
+      String(now.getMonth() + 1).padStart(2, '0') + "-" +
+      String(now.getDate()).padStart(2, '0') + " " +
+      hour + ":" +
+      String(now.getMinutes()).padStart(2, '0') + ":" +
+      String(now.getSeconds()).padStart(2, '0') + " " + ampm;
 
-      const icon = dayData.weather[0].icon;
-      const description = dayData.weather[0].description;
-      const max = Math.round(dayData.temp.max);
-      const min = Math.round(dayData.temp.min);
+    document.getElementById("lastUpdated").textContent = `Last Updated: ${formatted}`;
 
-      const card = document.createElement("div");
-      card.className = "forecast-day";
-      card.innerHTML = `
-        <div><strong>${dayName}</strong></div>
-        <img src="https://openweathermap.org/img/wn/${icon}@2x.png" alt="${description}" />
-        <div>${description}</div>
-        <div>🔺 ${max}°F</div>
-        <div>🔻 ${min}°F</div>
-      `;
-
-      forecastContainer.appendChild(card);
-    });
-  } catch (err) {
-    console.error("Error fetching forecast data:", err);
-    document.getElementById("forecast").innerHTML = "<p>Error loading forecast data.</p>";
+    renderForecast(data.daily);
+  } catch (error) {
+    console.error("Error fetching weather data:", error);
+    document.getElementById("forecast").innerHTML = `<p style="color:red;">Error fetching forecast data.</p>`;
   }
 }
 
-// Update the live clock in the dashboard
+function renderForecast(dailyData) {
+  const forecastContainer = document.getElementById("forecast");
+  forecastContainer.innerHTML = "";
+
+  dailyData.slice(0, 7).forEach((day) => {
+    const date = new Date(day.dt * 1000);
+    const dayName = date.toLocaleDateString("en-US", { weekday: "short" });
+    const icon = day.weather[0].icon;
+    const desc = day.weather[0].description;
+    const max = Math.round(day.temp.max);
+    const min = Math.round(day.temp.min);
+
+    const card = document.createElement("div");
+    card.className = "forecast-day";
+    card.innerHTML = `
+      <div><strong>${dayName}</strong></div>
+      <img src="https://openweathermap.org/img/wn/${icon}@2x.png" alt="${desc}" />
+      <div>${desc}</div>
+      <div>🔺 ${max}°F</div>
+      <div>🔻 ${min}°F</div>
+    `;
+    forecastContainer.appendChild(card);
+  });
+}
+
 function updateLiveTime() {
   const now = new Date();
-
-  // Format with AM/PM
-  let hours = now.getHours();
-  const ampm = hours >= 12 ? "PM" : "AM";
-  hours = hours % 12;
-  hours = hours ? hours : 12; // 0 -> 12
-
+  const hour = now.getHours() % 12 || 12;
+  const ampm = now.getHours() >= 12 ? 'PM' : 'AM';
   const timeStr =
-    hours.toString().padStart(2, "0") + ":" +
-    now.getMinutes().toString().padStart(2, "0") + ":" +
-    now.getSeconds().toString().padStart(2, "0") + " " + ampm;
-
+    String(hour).padStart(2, "0") + ":" +
+    String(now.getMinutes()).padStart(2, "0") + ":" +
+    String(now.getSeconds()).padStart(2, "0") + " " + ampm;
   document.getElementById("liveTime").textContent = timeStr;
 }
 
-// Initial calls
-fetchCurrentData();
-fetchForecast();
+// Initialize
+fetchWeatherData();
 updateLiveTime();
-
-// Intervals: Current data every 5 seconds, forecast every 10 mins, clock every second
-setInterval(fetchCurrentData, 5000);
-setInterval(fetchForecast, 600000);
-setInterval(updateLiveTime, 1000);
+setInterval(fetchWeatherData, 10000); // every 10 sec
+setInterval(updateLiveTime, 1000);    // every second
