@@ -1,32 +1,24 @@
-function updateDashboard(data) {
-  document.getElementById('temperature').textContent = `${data.temperature || '--'}°F`;
-  document.getElementById('humidity').textContent = `${data.humidity || '--'}%`;
-  document.getElementById('pressure').textContent = `${data.pressure || '--'} hPa`;
-  document.getElementById('windSpeed').textContent = data.windSpeed || '--';
-  document.getElementById('windDirection').textContent = `${data.windDirection || '--'}°`;
-  document.getElementById('lastUpdated').textContent = data.timestamp || '--';
+async function loadWeatherData() {
+  const response = await fetch('datalog.csv');
+  const text = await response.text();
+  const lines = text.trim().split('\n');
+  const latest = lines[lines.length - 1];
+  const [timestamp, tempF, humidity, pressure, windSpeed, windDirection] = latest.split(',');
+
+  document.getElementById('temperature').textContent = `${parseFloat(tempF).toFixed(1)}°F`;
+  document.getElementById('humidity').textContent = `Humidity: ${humidity}%`;
+  document.getElementById('pressure').textContent = `Pressure: ${pressure} hPa`;
+  document.getElementById('windSpeed').textContent = `Wind Speed: ${windSpeed} mph`;
+  document.getElementById('windDirection').textContent = `Wind Direction: ${windDirection}°`;
+  document.getElementById('lastUpdated').textContent = `Last Updated: ${timestamp}`;
 }
 
-function fetchData() {
-  fetch('datalog.csv')
-    .then((response) => response.text())
-    .then((csvText) => {
-      const lines = csvText.trim().split('\n');
-      const latest = lines[lines.length - 1].split(',');
-      const [timestamp, temperature, humidity, pressure, windSpeed, windDirection] = latest;
-      updateDashboard({ timestamp, temperature, humidity, pressure, windSpeed, windDirection });
-    })
-    .catch((error) => console.error('Error fetching data:', error));
-}
-
-function updateTime() {
+function updateClock() {
   const now = new Date();
-  const formatted = now.toLocaleString();
-  document.getElementById('datetime').textContent = formatted;
+  const timeString = now.toLocaleString();
+  document.getElementById('liveClock').textContent = `Current Time: ${timeString}`;
 }
 
-setInterval(updateTime, 1000);
-setInterval(fetchData, 5000);
-
-updateTime();
-fetchData();
+loadWeatherData();
+updateClock();
+setInterval(updateClock, 1000);
