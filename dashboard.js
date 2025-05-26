@@ -104,25 +104,28 @@ async function fetchForecast() {
 function updateTimeDisplays() {
   const now = new Date();
 
-  // Local Time (no label)
-  const localTime = now.toLocaleTimeString("en-US", {
-    hour: "2-digit",
-    minute: "2-digit",
-    second: "2-digit",
-    hour12: true
-  });
+  // Format local time with AM/PM
+  let hours = now.getHours();
+  const ampm = hours >= 12 ? "PM" : "AM";
+  hours = hours % 12 || 12; // Convert to 12-hour format
+  const localTime = `${hours.toString().padStart(2, "0")}:${now.getMinutes().toString().padStart(2, "0")}:${now.getSeconds().toString().padStart(2, "0")} ${ampm}`;
 
-  // Zulu Time
-  const zuluTime = now.toUTCString().match(/\d{2}:\d{2}:\d{2}/)[0];
+  // Format Zulu time (UTC, 24hr format)
+  const zulu = new Date(now.getTime() + now.getTimezoneOffset() * 60000);
+  const zuluHours = zulu.getUTCHours().toString().padStart(2, "0");
+  const zuluMinutes = zulu.getUTCMinutes().toString().padStart(2, "0");
+  const zuluSeconds = zulu.getUTCSeconds().toString().padStart(2, "0");
+  const zuluTime = `${zuluHours}:${zuluMinutes}:${zuluSeconds} UTC`;
 
-  // Update both in stacked format
-  const liveTimeDiv = document.getElementById("liveTimeCard");
-  liveTimeDiv.innerHTML = `
-    <strong>Live Time:</strong><br>
+  // Inject stacked format into the same card
+  const liveTimeCard = document.getElementById("liveTimeCard");
+  liveTimeCard.innerHTML = `
+    <strong>Live Time:</strong>
     <div class="gray-time">${localTime}</div>
-    <div class="gray-time">${zuluTime} UTC</div>
+    <div class="gray-time">${zuluTime}</div>
   `;
 }
+
 
 
 // Load data
