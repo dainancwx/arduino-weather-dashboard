@@ -9,28 +9,26 @@
 <body>
   <div class="container">
     <div class="left-panel">
-      <h1 id="temperature">-- °F</h1>
-      <p>Current Temperature</p>
-      <p id="humidity">Humidity: --%</p>
-      <p id="pressure">Pressure: -- hPa</p>
+      <div class="temperature" id="temperature">-- °F</div>
+      <div class="label">Current Temperature</div>
+      <div class="detail" id="humidity">Humidity: --%</div>
+      <div class="detail" id="pressure">Pressure: -- hPa</div>
     </div>
-
     <div class="right-panel">
-      <div class="card">
-        <h2>Wind Speed</h2>
-        <span id="windSpeed">--</span> <span>mph</span>
+      <div class="info-card">
+        <div class="label">Wind Speed</div>
+        <div class="value" id="windSpeed">-- mph</div>
       </div>
-      <div class="card">
-        <h2>Wind Direction</h2>
-        <span id="windDirection">--</span>
+      <div class="info-card">
+        <div class="label">Wind Direction</div>
+        <div class="value" id="windDirection">--°</div>
       </div>
-      <div class="card">
-        <h2>Last Updated</h2>
-        <span id="lastUpdated">--</span>
+      <div class="info-card">
+        <div class="label">Last Updated</div>
+        <div class="value" id="lastUpdated">--</div>
       </div>
     </div>
   </div>
-
   <script src="dashboard.js"></script>
 </body>
 </html>
