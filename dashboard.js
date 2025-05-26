@@ -23,17 +23,19 @@ async function loadWeatherData() {
 function updateClock() {
   const now = new Date();
 
-  console.log('Hour:', now.getHours());
-  console.log('Local time:', now.toLocaleTimeString());
-
   const year = now.getFullYear();
   const month = String(now.getMonth() + 1).padStart(2, '0');
   const day = String(now.getDate()).padStart(2, '0');
-  const formattedDate = `${year}-${month}-${day}`;
 
-  const formattedTime = now.toLocaleTimeString('en-GB', { hour12: false });
+  let hours = now.getHours() % 12;
+  hours = hours === 0 ? 12 : hours;  // Convert 0 to 12 for 12-hour clock
+  const minutes = String(now.getMinutes()).padStart(2, '0');
+  const seconds = String(now.getSeconds()).padStart(2, '0');
+  const ampm = now.getHours() >= 12 ? 'PM' : 'AM';
 
-  document.getElementById('liveClock').textContent = `Current Time: ${formattedDate} ${formattedTime}`;
+  const timeString = `${hours}:${minutes}:${seconds} ${ampm}`;
+
+  document.getElementById('liveClock').textContent = `Current Time: ${year}-${month}-${day} ${timeString}`;
 }
 
 loadWeatherData();
