@@ -7,26 +7,24 @@ body {
 
 .dashboard {
   display: flex;
+  flex-direction: row;
   justify-content: space-between;
-  flex-wrap: wrap;
-  gap: 2rem; /* ← Add spacing between left and right panels */
+  align-items: flex-start;
+  gap: 2rem; /* adds spacing between the left and right panels */
   padding: 2rem;
 }
 
+/* Make the left panel take more space */
 .left-panel {
-  flex: 1 1 40%;
-  background: #222;
-  padding: 2rem;
-  border-radius: 1.25rem;
-  box-shadow: 0 0 20px rgba(0,0,0,0.4);
-  margin-bottom: 2rem;
+  flex: 2;
 }
 
+/* Right panel takes less space and stacks its cards vertically */
 .right-panel {
-  flex: 1 1 50%;
+  flex: 1;
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
+  gap: 1rem; /* spacing between right panel cards */
 }
 
 .temp {
