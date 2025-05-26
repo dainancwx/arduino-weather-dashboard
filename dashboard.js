@@ -49,4 +49,31 @@ async function fetchForecast() {
     card.className = "forecast-day";
     card.innerHTML = `
       <div><strong>${dayName}</strong></div>
-      <img src="https://openweathermap.org/img/wn/${icon}@2x.png" alt="$
+      <img src="https://openweathermap.org/img/wn/${icon}@2x.png" alt="${description}" />
+      <div>${description}</div>
+      <div>🔺 ${max}°F</div>
+      <div>🔻 ${min}°F</div>
+    `;
+
+    forecastContainer.appendChild(card);
+  });
+}
+
+function updateLiveTime() {
+  const now = new Date();
+  const timeStr =
+    String(now.getHours()).padStart(2, "0") + ":" +
+    String(now.getMinutes()).padStart(2, "0") + ":" +
+    String(now.getSeconds()).padStart(2, "0");
+  document.getElementById("liveTime").textContent = timeStr;
+}
+
+// Initial load
+fetchCurrentData();
+fetchForecast();
+updateLiveTime();
+
+// Set intervals
+setInterval(fetchCurrentData, 10000);
+setInterval(fetchForecast, 600000); // every 10 minutes
+setInterval(updateLiveTime, 1000);   // every second
