@@ -2,40 +2,41 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Weather Dashboard</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mesonet Weather Dashboard</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
   <header>
-    <h1>Weather Dashboard</h1>
+    <h1>Mesonet Weather Dashboard</h1>
     <div id="lastUpdated">Last Updated: --:--:--</div>
   </header>
 
   <main>
     <section id="leftPanel">
-      <div id="tempValue" class="bigTemp">-- °F</div>
-      <div id="pressureValue" class="subInfo">Pressure: -- hPa</div>
-      <div id="humidityValue" class="subInfo">Humidity: -- %</div>
+      <div class="bigTemp" id="tempValue">-- °F</div>
+      <div class="subInfo" id="pressureValue">Pressure: -- hPa</div>
+      <div class="subInfo" id="humidityValue">Humidity: -- %</div>
     </section>
 
     <section id="rightPanel">
       <div class="card" id="windCard">
-        <div>🌬️ Wind Speed: <span id="windSpeedValue">-- mph</span></div>
-        <div>🧭 Wind Dir: <span id="windDirValue">-- °</span></div>
+        <div class="windRow">
+          <div>🌬️ Wind Speed: <span id="windSpeedValue">-- mph</span></div>
+          <div>🧭 Wind Direction: <span id="windDirValue">-- °</span></div>
+        </div>
       </div>
 
-      <div class="card" id="liveTimeCard" style="display: flex; align-items: center; justify-content: center; gap: 20px;">
-        <div style="font-size: 1.2rem; color: #aaa; font-weight: 600;">Live Time:</div>
-        <div id="localTime" style="color: #aaa; font-size: 1.1rem;">--:--:-- AM</div>
-        <div id="utcTime" style="color: #aaa; font-size: 1.1rem;">--:--:-- UTC</div>
+      <div class="card" id="liveTimeCard">
+        <div>🕒 Local Time: <span id="localTime">--:--:-- --</span></div>
+        <div>🌐 UTC Time: <span id="utcTime">--:--:-- UTC</span></div>
       </div>
     </section>
   </main>
 
   <section id="forecastSection">
     <h2>5-Day Forecast</h2>
-    <div id="forecast" class="forecastContainer">Loading forecast..</div>
+    <div class="forecastContainer" id="forecast">Loading forecast...</div>
   </section>
 
   <script src="dashboard.js"></script>
