@@ -9,8 +9,7 @@ async function fetchCurrentData() {
     const rows = text.trim().split("\n");
     const latest = rows[rows.length - 1].split(",");
 
-    // CSV columns: timestamp, windSpeed, windDir, hum, pressure, tempF
-    const [timestamp, windSpeed, windDir, hum, pressure, tempF] = latest;
+    const [_, windSpeed, windDir, hum, pressure, tempF] = latest;
 
     document.getElementById("windSpeedValue").textContent = `${parseFloat(windSpeed).toFixed(1)} mph`;
     document.getElementById("windDirValue").textContent = `${parseFloat(windDir).toFixed(1)} °`;
@@ -18,106 +17,77 @@ async function fetchCurrentData() {
     document.getElementById("pressureValue").textContent = `Pressure: ${parseFloat(pressure).toFixed(1)} hPa`;
     document.getElementById("humidityValue").textContent = `Humidity: ${parseFloat(hum).toFixed(1)} %`;
 
-    // Update last updated to local time with AM/PM
     const now = new Date();
-    let hours = now.getHours();
-    const ampm = hours >= 12 ? "PM" : "AM";
-    hours = hours % 12 || 12;
-    const formattedTime = `${hours.toString().padStart(2, "0")}:${now.getMinutes().toString().padStart(2, "0")}:${now.getSeconds().toString().padStart(2, "0")} ${ampm}`;
-    const dateString = `${now.getFullYear()}-${(now.getMonth()+1).toString().padStart(2,"0")}-${now.getDate().toString().padStart(2,"0")}`;
-
-    document.getElementById("lastUpdated").textContent = `Last Updated: ${dateString} ${formattedTime}`;
+    const ampm = now.getHours() >= 12 ? "PM" : "AM";
+    const hours = now.getHours() % 12 || 12;
+    const time = `${hours.toString().padStart(2, "0")}:${now.getMinutes().toString().padStart(2, "0")}:${now.getSeconds().toString().padStart(2, "0")} ${ampm}`;
+    const date = `${now.getFullYear()}-${(now.getMonth()+1).toString().padStart(2, "0")}-${now.getDate().toString().padStart(2, "0")}`;
+    document.getElementById("lastUpdated").textContent = `Last Updated: ${date} ${time}`;
   } catch (error) {
-    console.error("Error loading current data:", error);
-  }
-}
-
-async function fetchForecast() {
-  try {
-    const url = `https://api.openweathermap.org/data/2.5/forecast?lat=${LAT}&lon=${LON}&units=imperial&appid=${API_KEY}`;
-    const response = await fetch(url);
-    const data = await response.json();
-
-    if (!data.list) {
-      document.getElementById("forecast").textContent = "No forecast data available.";
-      return;
-    }
-
-    // Group by date to find forecast closest to 12:00
-    const dailyForecasts = {};
-    data.list.forEach(forecast => {
-      const dt = new Date(forecast.dt * 1000);
-      const dateStr = dt.toISOString().split("T")[0];
-      if (!dailyForecasts[dateStr]) dailyForecasts[dateStr] = [];
-      dailyForecasts[dateStr].push(forecast);
-    });
-
-    const forecastContainer = document.getElementById("forecast");
-    forecastContainer.innerHTML = "";
-
-    // Pick one forecast per day near 12:00 PM
-    Object.keys(dailyForecasts).slice(0,5).forEach(date => {
-      const dayForecasts = dailyForecasts[date];
-      dayForecasts.sort((a,b) => Math.abs(new Date(a.dt*1000).getHours() - 12) - Math.abs(new Date(b.dt*1000).getHours() - 12));
-      const forecast = dayForecasts[0];
-
-      const dateObj = new Date(forecast.dt * 1000);
-      const options = { weekday: "short", month: "short", day: "numeric" };
-      const dayStr = dateObj.toLocaleDateString(undefined, options);
-
-      const temp = Math.round(forecast.main.temp);
-      const iconCode = forecast.weather[0].icon;
-      const iconUrl = `https://openweathermap.org/img/wn/${iconCode}@2x.png`;
-      const description = forecast.weather[0].description;
-
-      const card = document.createElement("div");
-      card.className = "forecast-day";
-      card.innerHTML = `
-        <div>${dayStr}</div>
-        <img src="${iconUrl}" alt="${description}" title="${description}" />
-        <div>${temp} °F</div>
-      `;
-      forecastContainer.appendChild(card);
-    });
-  } catch (error) {
-    console.error("Error fetching forecast:", error);
-    document.getElementById("forecast").textContent = "Loading forecast..";
+    console.error("Error loading data:", error);
   }
 }
 
 function updateLiveTime() {
   const now = new Date();
+  const localHours = now.getHours() % 12 || 12;
+  const ampm = now.getHours() >= 12 ? "PM" : "AM";
 
-  // Local time with AM/PM
-  let hours = now.getHours();
-  const ampm = hours >= 12 ? "PM" : "AM";
-  hours = hours % 12 || 12;
-  const localTimeStr = `${hours.toString().padStart(2,"0")}:${now.getMinutes().toString().padStart(2,"0")}:${now.getSeconds().toString().padStart(2,"0")} ${ampm}`;
+  const local = `${localHours.toString().padStart(2, "0")}:${now.getMinutes().toString().padStart(2, "0")}:${now.getSeconds().toString().padStart(2, "0")} ${ampm}`;
+  const utc = `${now.getUTCHours().toString().padStart(2, "0")}:${now.getUTCMinutes().toString().padStart(2, "0")}:${now.getUTCSeconds().toString().padStart(2, "0")} UTC`;
 
-  // UTC time with "UTC" suffix
-  const utcHours = now.getUTCHours().toString().padStart(2,"0");
-  const utcMinutes = now.getUTCMinutes().toString().padStart(2,"0");
-  const utcSeconds = now.getUTCSeconds().toString().padStart(2,"0");
-  const utcTimeStr = `${utcHours}:${utcMinutes}:${utcSeconds} UTC`;
+  document.getElementById("localTime").textContent = local;
+  document.getElementById("utcTime").textContent = utc;
+}
 
-  document.getElementById("localTime").textContent = localTimeStr;
-  document.getElementById("utcTime").textContent = utcTimeStr;
+async function fetchForecast() {
+  try {
+    const url = `https://api.openweathermap.org/data/2.5/forecast?lat=${LAT}&lon=${LON}&units=imperial&appid=${API_KEY}`;
+    const res = await fetch(url);
+    const data = await res.json();
+
+    const daily = {};
+    data.list.forEach(item => {
+      const date = new Date(item.dt * 1000).toISOString().split("T")[0];
+      if (!daily[date]) daily[date] = [];
+      daily[date].push(item);
+    });
+
+    const container = document.getElementById("forecast");
+    container.innerHTML = "";
+
+    Object.keys(daily).slice(0, 5).forEach(date => {
+      const forecasts = daily[date];
+      forecasts.sort((a, b) => Math.abs(new Date(a.dt * 1000).getHours() - 12) - Math.abs(new Date(b.dt * 1000).getHours() - 12));
+      const forecast = forecasts[0];
+
+      const day = new Date(forecast.dt * 1000).toLocaleDateString(undefined, { weekday: "short", month: "short", day: "numeric" });
+      const icon = `https://openweathermap.org/img/wn/${forecast.weather[0].icon}@2x.png`;
+      const temp = Math.round(forecast.main.temp);
+      const desc = forecast.weather[0].description;
+
+      const card = document.createElement("div");
+      card.className = "forecast-day";
+      card.innerHTML = `
+        <div>${day}</div>
+        <img src="${icon}" alt="${desc}" title="${desc}" />
+        <div>${temp} °F</div>
+      `;
+      container.appendChild(card);
+    });
+  } catch (err) {
+    console.error("Forecast error:", err);
+    document.getElementById("forecast").textContent = "Failed to load forecast.";
+  }
 }
 
 async function updateDashboard() {
   await fetchCurrentData();
-  await fetchForecast();
   updateLiveTime();
+  await fetchForecast();
 }
 
-// Initial load
 updateDashboard();
-
-// Update current data and live time every 10 seconds
-setInterval(() => {
-  fetchCurrentData();
-  updateLiveTime();
-}, 10000);
-
-// Update forecast every 10 minutes
-setInterval(fetchForecast, 600000);
+setInterval(fetchCurrentData, 5000);
+setInterval(updateLiveTime, 1000);
+setInterval(fetchForecast, 30000);
