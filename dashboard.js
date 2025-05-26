@@ -2,33 +2,40 @@ async function fetchLatestData() {
   try {
     const response = await fetch("data/datalog.csv");
     const text = await response.text();
-    const rows = text.trim().split("\n");
 
-    if (rows.length < 2) throw new Error("Not enough data");
+    // Clean and parse rows
+    const rows = text.trim().split("\n").filter(row => row.length > 0);
+    if (rows.length < 2) throw new Error("CSV has no data rows");
 
     const headers = rows[0].split(",").map(h => h.trim());
     const latestRow = rows[rows.length - 1].split(",").map(val => val.trim());
 
+    if (latestRow.length !== headers.length) {
+      throw new Error("Header/data column mismatch");
+    }
+
     const data = {};
-    headers.forEach((h, i) => {
-      data[h] = latestRow[i];
+    headers.forEach((header, idx) => {
+      data[header] = latestRow[idx];
     });
 
-    // Fallback if columns missing
-    const tempC = parseFloat(data["Temperature"] || data["Temp"] || 0);
-    const tempF = (tempC * 9 / 5) + 32;
+    // Parse values
+    const tempF = (parseFloat(data["Temperature"]) * 9 / 5 + 32).toFixed(1);
+    const humidity = parseFloat(data["Humidity"]).toFixed(1);
+    const pressure = parseFloat(data["Pressure"]).toFixed(1);
+    const windSpeed = (parseFloat(data["WindSpeed"]) * 2.237).toFixed(1);
+    const windDir = parseFloat(data["WindDirection"]).toFixed(1);
+    const timestamp = data["Timestamp"];
 
-    const windSpeedMps = parseFloat(data["WindSpeed"] || data["Wind"] || 0);
-    const windMph = windSpeedMps * 2.237;
-
-    document.getElementById("tempVal").textContent = tempF.toFixed(1);
-    document.getElementById("humidityVal").textContent = parseFloat(data["Humidity"] || 0).toFixed(1);
-    document.getElementById("pressureVal").textContent = parseFloat(data["Pressure"] || 0).toFixed(1);
-    document.getElementById("windSpeedVal").textContent = windMph.toFixed(1);
-    document.getElementById("windDirVal").textContent = parseFloat(data["WindDirection"] || 0).toFixed(1);
-    document.getElementById("lastUpdate").textContent = data["Timestamp"] || "--";
+    // Update DOM
+    document.getElementById("tempVal").textContent = tempF;
+    document.getElementById("humidityVal").textContent = humidity;
+    document.getElementById("pressureVal").textContent = pressure;
+    document.getElementById("windSpeedVal").textContent = windSpeed;
+    document.getElementById("windDirVal").textContent = windDir;
+    document.getElementById("lastUpdate").textContent = timestamp;
 
   } catch (err) {
-    console.error("Error parsing CSV:", err);
+    console.error("Failed to load CSV:", err);
   }
 }
