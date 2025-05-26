@@ -1,63 +1,59 @@
-/* style.css */
 body {
+  margin: 0;
+  font-family: 'Segoe UI', sans-serif;
   background-color: #111;
   color: #eee;
-  font-family: 'Segoe UI', sans-serif;
-  margin: 0;
-  padding: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
 }
 
 .container {
   display: flex;
-  flex-wrap: wrap;
+  flex-direction: row;
   gap: 40px;
-  justify-content: center;
-  align-items: flex-start;
+  max-width: 1000px;
+  padding: 20px;
+}
+
+.left-panel, .right-panel {
+  background-color: #1c1c1c;
+  border-radius: 20px;
+  padding: 40px;
+  flex: 1;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.4);
 }
 
 .left-panel {
-  background-color: #222;
-  padding: 40px;
-  border-radius: 15px;
-  text-align: center;
-  min-width: 300px;
-  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
 .left-panel h1 {
-  font-size: 4rem;
+  font-size: 5rem;
   color: #00ff99;
   margin: 0;
 }
 
 .left-panel p {
-  margin: 10px 0;
   font-size: 1.2rem;
+  margin: 10px 0;
 }
 
-.right-panel {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-  flex: 1;
-  min-width: 300px;
-}
-
-.card {
+.right-panel .metric {
   background-color: #222;
-  padding: 30px;
-  border-radius: 15px;
+  margin-bottom: 20px;
+  border-radius: 12px;
+  padding: 20px;
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 
-.card h2 {
-  margin: 0;
-  font-size: 1.3rem;
-}
-
-.card span {
-  font-size: 1.3rem;
-  color: #eee;
+.right-panel .metric span {
+  font-size: 1.5rem;
+  color: #fff;
 }
