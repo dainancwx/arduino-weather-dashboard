@@ -31,8 +31,8 @@ async function loadSensorData() {
     document.getElementById('tempValue').textContent = `${tempF.toFixed(1)} °F`;
     document.getElementById('pressureValue').textContent = `Pressure: ${pressure.toFixed(1)} hPa`;
     document.getElementById('humidityValue').textContent = `Humidity: ${humidity.toFixed(1)} %`;
-    document.getElementById('windSpeedValue').textContent = `Wind Speed: ${windSpeed.toFixed(1)} mph`;
-    document.getElementById('windDirValue').textContent = `Wind Direction: ${windDirection.toFixed(1)} °`;
+    document.getElementById('windSpeedValue').textContent = `${windSpeed.toFixed(1)} mph`;
+    document.getElementById('windDirValue').textContent = `${windDirection.toFixed(1)} °`;
     document.getElementById('lastUpdated').textContent = `Last Updated: ${timestamp}`;
 
   } catch (error) {
@@ -43,7 +43,7 @@ async function loadSensorData() {
 // Fetch 7-day forecast from OpenWeather API
 async function loadForecast() {
   try {
-    const apiKey = 'YOUR_OPENWEATHER_API_KEY';  // replace with your actual key
+    const apiKey = 'YOUR_OPENWEATHER_API_KEY';  // replace with your actual API key
     const lat = 37.981104412392135;
     const lon = -90.05484322171593;
     const url = `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&units=imperial&exclude=minutely,hourly,alerts&appid=${apiKey}`;
