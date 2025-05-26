@@ -1,7 +1,6 @@
-/* General Styles */
 body {
   margin: 0;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-family: 'Segoe UI', sans-serif;
   background-color: #121212;
   color: #eee;
 }
@@ -17,7 +16,6 @@ header {
 
 h1 {
   margin: 0;
-  font-weight: 700;
   font-size: 1.8rem;
 }
 
@@ -27,142 +25,102 @@ h1 {
   font-family: monospace;
 }
 
-/* Main layout */
 main {
   display: flex;
-  padding: 20px 30px;
-  gap: 40px;
-  justify-content: center;
   flex-wrap: wrap;
+  gap: 30px;
+  padding: 30px;
+  justify-content: center;
 }
 
-/* Left panel */
-#leftPanel {
-  flex: 1 1 300px;
+#leftPanel, #rightPanel {
   background-color: #1f1f1f;
-  padding: 30px;
   border-radius: 12px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 25px;
-  box-shadow: 0 0 12px rgba(0, 200, 0, 0.4);
+  padding: 25px;
+  box-shadow: 0 0 12px rgba(0, 200, 0, 0.3);
+  flex: 1 1 320px;
 }
 
 .bigTemp {
   font-size: 5rem;
   font-weight: 900;
-  color: #2ecc40; /* bright green */
-  user-select: none;
+  color: #2ecc40;
+  text-align: center;
 }
 
 .subInfo {
   font-size: 1.2rem;
-  color: #999;
-  user-select: none;
+  color: #aaa;
+  text-align: center;
 }
 
-/* Right panel */
-#rightPanel {
-  flex: 1 1 320px;
-  background-color: #1f1f1f;
-  padding: 25px 20px 30px 25px;
-  border-radius: 12px;
-  box-shadow: 0 0 14px rgba(0, 120, 255, 0.4);
-  display: flex;
-  flex-direction: column;
-  gap: 25px;
-  user-select: none;
-}
-
-/* Cards inside right panel */
 .card {
   background-color: #292929;
   border-radius: 10px;
-  padding: 18px 20px;
+  padding: 15px 20px;
+  margin-bottom: 20px;
+  font-size: 1.1rem;
   color: #ccc;
-  font-size: 1.15rem;
-  font-weight: 600;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
   box-shadow: 0 0 6px rgba(0, 120, 255, 0.25);
 }
 
-/* Wind speed and direction line */
-#windCard > div {
+.windRow {
   display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-#windCard > div:first-child {
-  font-size: 1.25rem;
-}
-
-/* Live time card overrides for inline layout */
-#liveTimeCard {
-  flex-direction: row;
-  justify-content: flex-start;
-  gap: 20px;
-  font-weight: 600;
+  justify-content: space-between;
+  gap: 40px;
+  flex-wrap: wrap;
   color: #aaa;
-  font-size: 1.1rem;
-  user-select: none;
 }
 
-/* Forecast Section */
+#liveTimeCard {
+  display: flex;
+  justify-content: space-between;
+  gap: 30px;
+  color: #aaa;
+  flex-wrap: wrap;
+}
+
 #forecastSection {
-  padding: 0 30px 30px 30px;
+  padding: 0 30px 30px;
   max-width: 960px;
-  margin: 0 auto 40px auto;
+  margin: 0 auto;
 }
 
 #forecastSection h2 {
-  color: #eee;
-  font-weight: 700;
   margin-bottom: 15px;
   font-size: 1.6rem;
-  user-select: none;
+  color: #eee;
 }
 
-/* Forecast container holds the forecast day cards horizontally */
 .forecastContainer {
   display: flex;
   gap: 18px;
   overflow-x: auto;
   padding-bottom: 10px;
-  user-select: none;
 }
 
-/* Each forecast day card */
 .forecast-day {
   background-color: #222;
   border-radius: 14px;
   min-width: 130px;
-  max-width: 140px;
   padding: 18px 14px;
-  box-shadow: 0 0 10px rgba(0, 120, 255, 0.3);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  text-align: center;
   color: #ddd;
-  font-weight: 600;
-  user-select: none;
+  box-shadow: 0 0 10px rgba(0, 120, 255, 0.3);
 }
 
 .forecast-day div:first-child {
-  font-size: 1.1rem;
+  font-size: 1rem;
   margin-bottom: 8px;
 }
 
 .forecast-day img {
-  width: 70px;
-  height: 70px;
+  width: 60px;
+  height: 60px;
   margin-bottom: 8px;
 }
 
 .forecast-day div:last-child {
-  font-size: 1.25rem;
+  font-size: 1.2rem;
   color: #59a6ff;
 }
