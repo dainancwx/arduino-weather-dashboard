@@ -2,21 +2,22 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Arduino Sensor Dashboard</title>
   <link rel="stylesheet" href="style.css" />
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
-  <h1>Arduino Weather Sensor Dashboard</h1>
-  <div class="chart-container">
-    <canvas id="temperatureChart"></canvas>
-    <canvas id="humidityChart"></canvas>
-    <canvas id="angleChart"></canvas>
-    <canvas id="soundChart"></canvas>
-    <canvas id="coilChart"></canvas>
+  <h1>Arduino Sensor Dashboard</h1>
+
+  <div class="dashboard">
+    <div class="card" id="tempCard">🌡️ <strong>Temperature:</strong> <span>-</span> °C</div>
+    <div class="card" id="humidityCard">💧 <strong>Humidity:</strong> <span>-</span> %</div>
+    <div class="card" id="pressureCard">📈 <strong>Pressure:</strong> <span>-</span> hPa</div>
+    <div class="card" id="angleCard">🔁 <strong>Angle:</strong> <span>-</span> °</div>
+    <div class="card" id="soundCard">🔊 <strong>Sound:</strong> <span>-</span></div>
+    <div class="card" id="coilCard">🧲 <strong>Coil:</strong> <span>-</span></div>
   </div>
 
-  <script src="chart.js"></script>
+  <script src="dashboard.js"></script>
 </body>
 </html>
