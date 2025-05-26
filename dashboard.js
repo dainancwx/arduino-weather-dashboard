@@ -42,36 +42,35 @@ function updateLiveTime() {
 
 async function fetchForecast() {
   try {
-    const url = `https://api.openweathermap.org/data/2.5/forecast?lat=38.336418776106676&lon=-90.15364904539364&units=imperial&appid=f9c86aa8266a0d5c15d39ad5ca0b6c7e`;
+    const url = `https://api.openweathermap.org/data/2.5/forecast?lat=${LAT}&lon=${LON}&units=imperial&appid=${API_KEY}`;
     const res = await fetch(url);
     const data = await res.json();
-
-    const daily = {};
-    data.list.forEach(item => {
-      const date = new Date(item.dt * 1000).toISOString().split("T")[0];
-      if (!daily[date]) daily[date] = [];
-      daily[date].push(item);
-    });
 
     const container = document.getElementById("forecast");
     container.innerHTML = "";
 
-    Object.keys(daily).slice(0, 5).forEach(date => {
-      const forecasts = daily[date];
-      forecasts.sort((a, b) => Math.abs(new Date(a.dt * 1000).getHours() - 12) - Math.abs(new Date(b.dt * 1000).getHours() - 12));
-      const forecast = forecasts[0];
+    const selectedForecasts = data.list.filter((_, index) => index % 3 === 0).slice(0, 15); // 5 days × 3 = 15 entries
 
-      const day = new Date(forecast.dt * 1000).toLocaleDateString(undefined, { weekday: "short", month: "short", day: "numeric" });
-      const icon = `https://openweathermap.org/img/wn/${forecast.weather[0].icon}@2x.png`;
-      const temp = Math.round(forecast.main.temp);
-      const desc = forecast.weather[0].description;
+    selectedForecasts.forEach(item => {
+      const time = new Date(item.dt * 1000);
+      const displayTime = time.toLocaleString(undefined, {
+        weekday: "short",
+        hour: "2-digit",
+        minute: "2-digit",
+        hour12: true
+      });
+
+      const icon = `https://openweathermap.org/img/wn/${item.weather[0].icon}@2x.png`;
+      const temp = Math.round(item.main.temp);
+      const desc = item.weather[0].description;
 
       const card = document.createElement("div");
       card.className = "forecast-day";
       card.innerHTML = `
-        <div>${day}</div>
+        <div>${displayTime}</div>
         <img src="${icon}" alt="${desc}" title="${desc}" />
         <div>${temp} °F</div>
+        <div style="font-size: 0.9rem;">${desc}</div>
       `;
       container.appendChild(card);
     });
