@@ -6,23 +6,52 @@ body {
   padding: 2rem;
 }
 
-h1, h2 {
+h1 {
   text-align: center;
-  margin-bottom: 1rem;
+  font-size: 2rem;
+}
+
+#lastUpdated {
+  text-align: center;
+  font-size: 0.95rem;
+  color: #ccc;
+  margin-bottom: 2rem;
 }
 
 .container {
   display: flex;
-  gap: 2rem;
   flex-wrap: wrap;
   justify-content: center;
+  gap: 2rem;
 }
 
 .left-panel, .right-panel {
   flex: 1 1 300px;
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: 1.5rem;
+}
+
+/* Temperature Box */
+.temperature-display {
+  background-color: #222;
+  border-left: 6px solid #00ff88;
+  border-radius: 12px;
+  padding: 2rem;
+  text-align: center;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+}
+
+#tempValue {
+  font-size: 3rem;
+  font-weight: bold;
+  color: #00ff88;
+}
+
+.sub-info {
+  margin-top: 1rem;
+  font-size: 1rem;
+  color: #aaa;
 }
 
 .card {
@@ -42,17 +71,11 @@ h1, h2 {
   color: #fff;
 }
 
-#lastUpdated {
-  font-size: 0.95rem;
-  text-align: center;
-  margin-bottom: 1rem;
-  color: #ccc;
-}
-
 /* Forecast Styles */
 .forecast-title {
   margin-top: 3rem;
   font-size: 1.5rem;
+  text-align: center;
 }
 
 .forecast-container {
