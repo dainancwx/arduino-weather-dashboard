@@ -3,43 +3,42 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>MESONET Weather Dashboard</title>
+  <title>Weather Dashboard</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <h1>🌤️ MESONET Weather Dashboard</h1>
-  <div id="lastUpdated">Last Updated: --</div>
+  <header>
+    <h1>Weather Dashboard</h1>
+    <div id="lastUpdated">Last Updated: --:--:--</div>
+  </header>
 
-  <div class="container">
-    <div class="left-panel">
-      <div class="temperature-display">
-        <div id="tempValue">-- °F</div>
-        <div class="sub-info">
-          <div id="pressureValue">Pressure: -- hPa</div>
-          <div id="humidityValue">Humidity: -- %</div>
-        </div>
-      </div>
-    </div>
+  <main>
+    <section id="leftPanel">
+      <div id="tempValue" class="bigTemp">-- °F</div>
+      <div id="pressureValue" class="subInfo">Pressure: -- hPa</div>
+      <div id="humidityValue" class="subInfo">Humidity: -- %</div>
+    </section>
 
-    <div class="right-panel">
-      <div class="card" id="windSpeedCard">
-        💨 <strong>Wind Speed:</strong> <span id="windSpeedValue">-- mph</span>
+    <section id="rightPanel">
+      <div class="card" id="windCard">
+        <div>🌬️ Wind Speed: <span id="windSpeedValue">-- mph</span></div>
+        <div>🧭 Wind Dir: <span id="windDirValue">-- °</span></div>
       </div>
-      <div class="card" id="windDirCard">
-        🧭 <strong>Wind Direction:</strong> <span id="windDirValue">-- °</span>
-      </div>
+
       <div class="card" id="liveTimeCard">
-        <span class="live-label">⏱️ Live Time:</span>
-        <div class="times-container">
-          <div id="localTime">--:--:-- --</div>
-          <div id="utcTime">--:--:-- UTC</div>
+        <div class="liveTimeLabel">Live Time:</div>
+        <div class="liveTimeValues">
+          <div id="localTime" class="timeValue">--:--:-- AM</div>
+          <div id="utcTime" class="timeValue">--:--:-- UTC</div>
         </div>
       </div>
-    </div>
-  </div>
+    </section>
+  </main>
 
-  <h2 class="forecast-title">5-Day 3-Hour Forecast</h2>
-  <div id="forecast" class="forecast-container">Loading forecast...</div>
+  <section id="forecastSection">
+    <h2>5-Day 8-Hour Forecast</h2>
+    <div id="forecast" class="forecastContainer">Loading forecast..</div>
+  </section>
 
   <script src="dashboard.js"></script>
 </body>
