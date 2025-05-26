@@ -38,7 +38,7 @@ async function fetchCurrentData() {
 
 async function fetchForecast() {
   try {
-    const response = await fetch(`https://api.openweathermap.org/data/2.5/forecast?lat={37.9811}&lon={-90.0548}&units=imperial&appid={f9c86aa8266a0d5c15d39ad5ca0b6c7e}`);
+    const response = await fetch(`https://api.openweathermap.org/data/2.5/forecast?lat=37.9811&lon=-90.0548&units=imperial&appid=f9c86aa8266a0d5c15d39ad5ca0b6c7e`);
     
     const data = await response.json();
 
