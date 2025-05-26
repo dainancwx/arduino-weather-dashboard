@@ -20,7 +20,7 @@ h1 {
   margin-bottom: 2rem;
 }
 
-/* Container for left and right panels */
+/* Container for panels */
 .container {
   display: flex;
   flex-wrap: wrap;
@@ -28,15 +28,16 @@ h1 {
   gap: 2rem;
 }
 
-/* Left panel */
-.left-panel {
+/* Left and Right panels */
+.left-panel,
+.right-panel {
   flex: 1 1 320px;
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
 }
 
-/* Temperature box */
+/* Temperature box (left panel) */
 .temperature-display {
   background-color: #222;
   border-left: 6px solid #00ff88;
@@ -58,21 +59,15 @@ h1 {
   color: #aaa;
 }
 
-/* Right panel */
+/* Right panel cards container: horizontal layout */
 .right-panel {
-  flex: 1 1 320px;
-  display: flex;
-  flex-direction: row;
-  gap: 2rem;
-  justify-content: center;
+  flex-direction: row;  /* Changed from column to row */
+  justify-content: space-between;
   align-items: center;
-  flex-wrap: nowrap;
 }
 
-/* Right panel cards */
+/* Individual cards in right panel */
 .right-panel .card {
-  flex: 1 1 140px;
-  max-width: 160px;
   background-color: #222;
   border-left: 5px solid #4a90e2;
   border-radius: 10px;
@@ -82,32 +77,31 @@ h1 {
   display: flex;
   align-items: center;
   gap: 0.75rem;
-  margin-bottom: 0; /* no bottom margin for inline cards */
+  flex: 1; /* Allow equal width cards */
+  max-width: 150px; /* Optional max width so they don't get too wide */
+  margin: 0; /* Remove margin bottom since horizontal layout */
 }
 
-/* Emoji icons in cards */
-.right-panel .card::before {
-  font-size: 1.4rem;
-  line-height: 1;
-}
-
+/* Icons for each card */
 #windSpeedCard::before {
   content: "💨";
+  font-size: 1.4rem;
 }
 
 #windDirCard::before {
   content: "🧭";
+  font-size: 1.4rem;
 }
 
 #liveTimeCard::before {
   content: "⏱️";
+  font-size: 1.4rem;
 }
 
-/* Text inside cards */
+/* Text styling inside cards */
 .right-panel .card strong {
   font-weight: bold;
   color: #ccc;
-  white-space: nowrap;
 }
 
 .right-panel .card span {
@@ -117,7 +111,7 @@ h1 {
   text-align: right;
 }
 
-/* Live Time card special styling */
+/* Center Live Time card content */
 #liveTimeCard {
   justify-content: center;
 }
@@ -128,14 +122,13 @@ h1 {
   flex-grow: unset;
 }
 
-/* Forecast title */
+/* Forecast styles */
 .forecast-title {
   margin-top: 3rem;
   font-size: 1.5rem;
   text-align: center;
 }
 
-/* Forecast container */
 .forecast-container {
   display: flex;
   justify-content: center;
@@ -144,45 +137,18 @@ h1 {
   padding-top: 1rem;
 }
 
-/* Each day box in forecast */
 .forecast-day {
   background-color: #1e1e1e;
   border-radius: 8px;
   padding: 1rem;
   text-align: center;
-  width: 150px;
+  width: 140px;
   box-shadow: 0 2px 6px rgba(0,0,0,0.3);
   color: #eee;
-  font-size: 0.9rem;
 }
 
 .forecast-day img {
   width: 48px;
   height: 48px;
   margin-bottom: 0.5rem;
-}
-
-/* 3-hour blocks inside forecast day */
-.forecast-day > div {
-  margin-top: 0.5rem;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 0.3rem;
-}
-
-.forecast-day > div > div {
-  min-width: 65px;
-  font-size: 0.85rem;
-}
-
-.forecast-day > div img {
-  width: 32px;
-  height: 32px;
-  margin: 0;
-}
-
-.forecast-day > div > div:last-child {
-  min-width: 35px;
-  font-weight: bold;
 }
