@@ -6,7 +6,7 @@ async function fetchLatestData() {
 
   const [timestamp, windSpeed, windDir, hum, pressure, temp] = latest;
 
-  document.querySelector("#windSpeedCard span").textContent = parseFloat(windSpeed).toFixed(1);
+  document.querySelector("#windSpeedCard span").textContent = (parseFloat(windSpeed) * 2.237).toFixed(1);
   document.querySelector("#windDirCard span").textContent = parseFloat(windDir).toFixed(1);
   document.querySelector("#humidityCard span").textContent = parseFloat(hum).toFixed(1);
   document.querySelector("#pressureCard span").textContent = parseFloat(pressure).toFixed(1);
