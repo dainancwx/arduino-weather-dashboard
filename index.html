@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>MESONET Weather Dashboard</title>
   <link rel="stylesheet" href="style.css" />
 </head>
@@ -11,6 +11,7 @@
   <div id="lastUpdated">Last Updated: --</div>
 
   <div class="container">
+    <!-- Left Panel -->
     <div class="left-panel">
       <div class="temperature-display">
         <div id="tempValue">-- °F</div>
@@ -21,13 +22,14 @@
       </div>
     </div>
 
+    <!-- Right Panel -->
     <div class="right-panel">
-      <div class="card" id="windSpeedCard">💨 <strong>Wind Speed:</strong> <span id="windSpeedValue">-- mph</span></div>
-      <div class="card" id="windDirCard">🧭 <strong>Wind Direction:</strong> <span id="windDirValue">-- °</span></div>
+      <div class="card" id="windSpeedCard">🌬️ Wind Speed: <span>-- mph</span></div>
+      <div class="card" id="windDirectionCard">🧭 Wind Direction: <span>--°</span></div>
       <div class="card" id="liveTimeCard">
-        <strong>Live Time:</strong>
-        <div id="liveTime" class="gray-time">--:--:--</div>
-        <div id="zuluTime" class="gray-time">--:--:-- UTC</div>
+        <strong>⏱️ Live Time:</strong><br/>
+        <span id="localTime" style="display: block; color: #ccc;">--:--:--</span>
+        <span id="zuluTime" style="display: block; color: #ccc;">Zulu: --:--:--</span>
       </div>
     </div>
   </div>
