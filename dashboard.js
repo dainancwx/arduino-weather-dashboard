@@ -1,22 +1,32 @@
-function degreesToCompass(deg) {
-  const directions = ["N", "NE", "E", "SE", "S", "SW", "W", "NW"];
-  return directions[Math.round(deg / 45) % 8];
+function updateDashboard(data) {
+  document.getElementById('temperature').textContent = `${data.temperature || '--'}°F`;
+  document.getElementById('humidity').textContent = `${data.humidity || '--'}%`;
+  document.getElementById('pressure').textContent = `${data.pressure || '--'} hPa`;
+  document.getElementById('windSpeed').textContent = data.windSpeed || '--';
+  document.getElementById('windDirection').textContent = `${data.windDirection || '--'}°`;
+  document.getElementById('lastUpdated').textContent = data.timestamp || '--';
 }
 
-fetch('datalog.csv')
-  .then(response => response.text())
-  .then(data => {
-    const lines = data.trim().split('\n');
-    const lastLine = lines[lines.length - 1];
-    const [timestamp, temperature, humidity, pressure, windSpeed, windDirection] = lastLine.split(',');
+function fetchData() {
+  fetch('datalog.csv')
+    .then((response) => response.text())
+    .then((csvText) => {
+      const lines = csvText.trim().split('\n');
+      const latest = lines[lines.length - 1].split(',');
+      const [timestamp, temperature, humidity, pressure, windSpeed, windDirection] = latest;
+      updateDashboard({ timestamp, temperature, humidity, pressure, windSpeed, windDirection });
+    })
+    .catch((error) => console.error('Error fetching data:', error));
+}
 
-    document.getElementById('temperature').innerText = `${temperature}°F`;
-    document.getElementById('humidity').innerText = `Humidity: ${humidity}%`;
-    document.getElementById('pressure').innerText = `Pressure: ${pressure} hPa`;
-    document.getElementById('windSpeed').innerText = `${windSpeed} mph`;
-    document.getElementById('windDirection').innerText = `${windDirection}°`;
-    document.getElementById('lastUpdated').innerText = timestamp;
-  })
-  .catch(err => {
-    console.error('Error loading data:', err);
-  });
+function updateTime() {
+  const now = new Date();
+  const formatted = now.toLocaleString();
+  document.getElementById('datetime').textContent = formatted;
+}
+
+setInterval(updateTime, 1000);
+setInterval(fetchData, 5000);
+
+updateTime();
+fetchData();
