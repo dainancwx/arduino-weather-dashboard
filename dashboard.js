@@ -30,7 +30,7 @@ function updateClock() {
 
 // Load weather data immediately, then every 30 seconds
 loadWeatherData();
-setInterval(loadWeatherData, 1000);
+setInterval(loadWeatherData, 5000);
 
 updateClock();
 setInterval(updateClock, 1000);
