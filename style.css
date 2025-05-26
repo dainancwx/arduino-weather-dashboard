@@ -1,4 +1,4 @@
-/* Global Styles */
+/* Global styles */
 body {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   background-color: #111;
@@ -10,7 +10,7 @@ body {
 h1 {
   text-align: center;
   font-size: 2rem;
-  margin-bottom: 0.25rem;
+  margin-bottom: 0.5rem;
 }
 
 #lastUpdated {
@@ -20,7 +20,7 @@ h1 {
   margin-bottom: 2rem;
 }
 
-/* Container for main panels */
+/* Container for panels */
 .container {
   display: flex;
   flex-wrap: wrap;
@@ -29,14 +29,15 @@ h1 {
 }
 
 /* Left and Right panels */
-.left-panel, .right-panel {
-  flex: 1 1 320px;
+.left-panel,
+.right-panel {
+  flex: 1 1 300px;
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
 }
 
-/* Left Panel - Temperature Display */
+/* Temperature box (left panel) */
 .temperature-display {
   background-color: #222;
   border-left: 6px solid #00ff88;
@@ -58,52 +59,73 @@ h1 {
   color: #aaa;
 }
 
-/* Right Panel - Unified card container */
-.right-panel {
-  background-color: #222;
-  border-radius: 12px;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-  padding: 1rem 1.5rem;
-}
-
+/* Cards on right panel */
 .right-panel .card {
-  border-left: none;           /* no border-left on individual cards */
-  padding: 1rem 0;
-  border-bottom: 1px solid #444;
-  font-size: 1.2rem;
+  background-color: #222;
+  border-left: 5px solid #4a90e2;
+  border-radius: 10px;
+  padding: 1rem 1.5rem;
+  font-size: 1.1rem;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  gap: 0.5rem; /* Add gap for spacing between icon and text */
+  gap: 0.75rem;
+  margin-bottom: 1.25rem;
 }
 
-/* Fix spacing for the last card */
+/* Remove margin from last card */
 .right-panel .card:last-child {
-  border-bottom: none;         /* no border under last card */
-  padding-top: 1rem;           /* add top padding */
-  padding-bottom: 1rem;        /* keep bottom padding */
-  justify-content: flex-start; /* align items to left for better centering */
+  margin-bottom: 0;
 }
 
-/* For the Live Time card's icon and text alignment */
-#liveTimeCard {
-  justify-content: flex-start; /* Align icon and text to the left */
+/* Icon styling */
+.right-panel .card::before {
+  font-size: 1.4rem;
+  line-height: 1;
 }
 
-#liveTimeCard span {
-  margin-left: 0.5rem; /* space between "Live Time:" and the actual time */
+/* Specific icons for each card */
+#windSpeedCard::before {
+  content: "💨";
+}
+
+#windDirCard::before {
+  content: "🧭";
+}
+
+#liveTimeCard::before {
+  content: "⏱️";
+}
+
+/* Text styling inside cards */
+.right-panel .card strong {
   font-weight: bold;
-  color: #fff;
-  min-width: 75px; /* optional: keep consistent width */
-  text-align: center;
+  color: #ccc;
 }
 
-/* Forecast section */
+.right-panel .card span {
+  color: #fff;
+  font-weight: normal;
+  flex-grow: 1;
+  text-align: right;
+}
+
+/* Center the Live Time card content horizontally */
+#liveTimeCard {
+  justify-content: center;
+}
+
+#liveTimeCard strong,
+#liveTimeCard span {
+  text-align: center;
+  flex-grow: unset;
+}
+
+/* Forecast styles */
 .forecast-title {
   margin-top: 3rem;
   font-size: 1.5rem;
   text-align: center;
-  color: #ccc;
 }
 
 .forecast-container {
@@ -121,11 +143,11 @@ h1 {
   text-align: center;
   width: 130px;
   box-shadow: 0 2px 6px rgba(0,0,0,0.3);
-  color: #ddd;
+  color: #eee;
 }
 
 .forecast-day img {
   width: 48px;
   height: 48px;
-  margin: 0.5rem 0;
+  margin-bottom: 0.5rem;
 }
