@@ -104,20 +104,26 @@ async function fetchForecast() {
 function updateTimeDisplays() {
   const now = new Date();
 
-  // Local Time
+  // Local Time (no label)
   const localTime = now.toLocaleTimeString("en-US", {
     hour: "2-digit",
     minute: "2-digit",
     second: "2-digit",
-    hour12: false
+    hour12: true
   });
 
   // Zulu Time
   const zuluTime = now.toUTCString().match(/\d{2}:\d{2}:\d{2}/)[0];
 
-  document.getElementById("liveTime").textContent = localTime;
-  document.getElementById("zuluTime").textContent = `${zuluTime} UTC`;
+  // Update both in stacked format
+  const liveTimeDiv = document.getElementById("liveTimeCard");
+  liveTimeDiv.innerHTML = `
+    <strong>Live Time:</strong><br>
+    <div class="gray-time">${localTime}</div>
+    <div class="gray-time">${zuluTime} UTC</div>
+  `;
 }
+
 
 // Load data
 fetchCurrentData();
