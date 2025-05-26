@@ -9,7 +9,7 @@ async function fetchCSV() {
   rows.forEach(row => {
     const cols = row.split(",");
     timestamps.push(cols[0]);
-    windSpeed.push(parseFloat(cols[1]) * 2.237); // Convert m/s to mph
+    windSpeed.push(parseFloat(cols[1]) * 2.237); // convert m/s to mph here
     windDir.push(parseFloat(cols[2]));
     hum.push(parseFloat(cols[3]));
     pressure.push(parseFloat(cols[4]));
