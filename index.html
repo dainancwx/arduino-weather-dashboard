@@ -2,32 +2,27 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>MESONET Weather Dashboard</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <h1>MESONET Weather Dashboard</h1>
-  <div id="liveTime"></div>
-
-  <div class="dashboard">
+  <div class="container">
     <div class="left-panel">
-      <div class="card" id="tempCard">🌡️ <strong>Temperature:</strong> <span id="temperature">-</span></div>
+      <h1>🌤️ MESONET Dashboard</h1>
+      <div id="lastUpdated">Last Updated: --</div>
+      <div class="card" id="tempCard">🌡️ <strong>Temperature:</strong> <span>-</span> °F</div>
     </div>
     <div class="right-panel">
-      <div class="card" id="windSpeedCard">🌬️ <strong>Wind Speed:</strong> <span id="windSpeed">-</span></div>
-      <div class="card" id="windDirCard">🧭 <strong>Wind Direction:</strong> <span id="windDirection">-</span></div>
-      <div class="card" id="humidityCard">💧 <strong>Humidity:</strong> <span id="humidity">-</span></div>
-      <div class="card" id="pressureCard">📈 <strong>Pressure:</strong> <span id="pressure">-</span></div>
+      <div class="card" id="windSpeedCard">💨 <strong>Wind Speed:</strong> <span>-</span> mph</div>
+      <div class="card" id="windDirCard">🧭 <strong>Wind Direction:</strong> <span>-</span> °</div>
+      <div class="card" id="humidityCard">💧 <strong>Humidity:</strong> <span>-</span> %</div>
+      <div class="card" id="pressureCard">📈 <strong>Pressure:</strong> <span>-</span> hPa</div>
     </div>
   </div>
 
-  <div class="forecast-section">
-    <h2>5-Day Forecast</h2>
-    <div id="forecastContainer" class="forecast-cards"></div>
-  </div>
-
-  <div id="lastUpdated"></div>
+  <h2 class="forecast-title">5-Day Forecast</h2>
+  <div class="forecast-container" id="forecast"></div>
 
   <script src="dashboard.js"></script>
 </body>
