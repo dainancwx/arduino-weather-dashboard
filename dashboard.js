@@ -4,7 +4,7 @@ async function loadWeatherData() {
     const text = await response.text();
     const lines = text.trim().split('\n');
 
-    if (lines.length < 2) return; // No data yet
+    if (lines.length < 2) return;
 
     const latest = lines[lines.length - 1];
     const [timestamp, tempF, humidity, pressure, windSpeed, windDirection] = latest.split(',');
@@ -23,19 +23,21 @@ async function loadWeatherData() {
 function updateClock() {
   const now = new Date();
 
-  // Format date as YYYY-MM-DD
-  const datePart = now.toLocaleDateString('en-CA'); // 'en-CA' formats as YYYY-MM-DD
+  console.log('Hour:', now.getHours());
+  console.log('Local time:', now.toLocaleTimeString());
 
-  // Format time as HH:MM:SS 24-hour format, local time
-  const timePart = now.toLocaleTimeString('en-GB', { hour12: false });
+  const year = now.getFullYear();
+  const month = String(now.getMonth() + 1).padStart(2, '0');
+  const day = String(now.getDate()).padStart(2, '0');
+  const formattedDate = `${year}-${month}-${day}`;
 
-  document.getElementById('liveClock').textContent = `Current Time: ${datePart} ${timePart}`;
+  const formattedTime = now.toLocaleTimeString('en-GB', { hour12: false });
+
+  document.getElementById('liveClock').textContent = `Current Time: ${formattedDate} ${formattedTime}`;
 }
 
-// Initial calls
 loadWeatherData();
 updateClock();
 
-// Refresh intervals
-setInterval(loadWeatherData, 5000); // every 30 seconds
-setInterval(updateClock, 1000);       // every 1 second
+setInterval(loadWeatherData, 5000);
+setInterval(updateClock, 1000);
