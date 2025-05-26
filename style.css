@@ -66,7 +66,6 @@ h1 {
   padding: 1rem 1.5rem;
 }
 
-/* Cards inside right panel */
 .right-panel .card {
   border-left: none;           /* no border-left on individual cards */
   padding: 1rem 0;
@@ -75,15 +74,28 @@ h1 {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  gap: 0.5rem; /* Add gap for spacing between icon and text */
 }
 
+/* Fix spacing for the last card */
 .right-panel .card:last-child {
   border-bottom: none;         /* no border under last card */
+  padding-top: 1rem;           /* add top padding */
+  padding-bottom: 1rem;        /* keep bottom padding */
+  justify-content: flex-start; /* align items to left for better centering */
 }
 
-.right-panel .card span {
+/* For the Live Time card's icon and text alignment */
+#liveTimeCard {
+  justify-content: flex-start; /* Align icon and text to the left */
+}
+
+#liveTimeCard span {
+  margin-left: 0.5rem; /* space between "Live Time:" and the actual time */
   font-weight: bold;
   color: #fff;
+  min-width: 75px; /* optional: keep consistent width */
+  text-align: center;
 }
 
 /* Forecast section */
