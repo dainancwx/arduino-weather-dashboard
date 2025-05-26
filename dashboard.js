@@ -1,6 +1,6 @@
 const API_KEY = "f9c86aa8266a0d5c15d39ad5ca0b6c7e";
-const LAT = 37.9811;
-const LON = -90.0548;
+const LAT = 38.336418776106676;
+const LON = -90.15364904539364;
 
 async function fetchCurrentData() {
   try {
