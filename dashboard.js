@@ -1,41 +1,46 @@
-async function fetchLatestData() {
-  try {
-    const response = await fetch("datalog.csv");
-    const text = await response.text();
+// Helper: Convert wind direction degrees to compass
+function degreesToCompass(deg) {
+  const directions = ["N", "NE", "E", "SE", "S", "SW", "W", "NW"];
+  return directions[Math.round(deg / 45) % 8];
+}
 
-    // Clean and parse rows
-    const rows = text.trim().split("\n").filter(row => row.length > 0);
-    if (rows.length < 2) throw new Error("CSV has no data rows");
+// Load CSV and update dashboard
+fetch('datalog.csv')
+  .then(response => response.text())
+  .then(data => {
+    const rows = data.trim().split('\n');
+    const headers = rows[0].split(',');
+    const latest = rows[1]?.split(',');
 
-    const headers = rows[0].split(",").map(h => h.trim());
-    const latestRow = rows[rows.length - 1].split(",").map(val => val.trim());
-
-    if (latestRow.length !== headers.length) {
-      throw new Error("Header/data column mismatch");
+    if (!latest || latest.length < 6) {
+      console.warn('No valid data in CSV.');
+      return;
     }
 
-    const data = {};
-    headers.forEach((header, idx) => {
-      data[header] = latestRow[idx];
-    });
-
     // Parse values
-    const tempF = (parseFloat(data["Temperature"]) * 9 / 5 + 32).toFixed(1);
-    const humidity = parseFloat(data["Humidity"]).toFixed(1);
-    const pressure = parseFloat(data["Pressure"]).toFixed(1);
-    const windSpeed = (parseFloat(data["WindSpeed"]) * 2.237).toFixed(1);
-    const windDir = parseFloat(data["WindDirection"]).toFixed(1);
-    const timestamp = data["Timestamp"];
+    const [
+      timestamp,
+      temp,
+      humidity,
+      pressure,
+      windSpeed,
+      windDirection
+    ] = latest;
 
     // Update DOM
-    document.getElementById("tempVal").textContent = tempF;
-    document.getElementById("humidityVal").textContent = humidity;
-    document.getElementById("pressureVal").textContent = pressure;
-    document.getElementById("windSpeedVal").textContent = windSpeed;
-    document.getElementById("windDirVal").textContent = windDir;
-    document.getElementById("lastUpdate").textContent = timestamp;
-
-  } catch (err) {
-    console.error("Failed to load CSV:", err);
-  }
-}
+    document.getElementById('temperature').innerHTML = 
+      isNaN(temp) ? '-- °F' : `${parseFloat(temp).toFixed(1)}°F`;
+    document.getElementById('humidity').textContent = 
+      isNaN(humidity) ? '--%' : `${parseFloat(humidity).toFixed(1)}%`;
+    document.getElementById('pressure').textContent = 
+      isNaN(pressure) ? '-- hPa' : `${parseFloat(pressure).toFixed(1)} hPa`;
+    document.getElementById('windSpeed').textContent = 
+      isNaN(windSpeed) ? '--' : `${parseFloat(windSpeed).toFixed(1)}`;
+    document.getElementById('windDirection').textContent = 
+      isNaN(windDirection) ? '--' : `${parseFloat(windDirection)}° (${degreesToCompass(windDirection)})`;
+    document.getElementById('lastUpdated').textContent = 
+      timestamp || '--';
+  })
+  .catch(error => {
+    console.error('Error loading CSV:', error);
+  });
