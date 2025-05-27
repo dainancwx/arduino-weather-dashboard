@@ -113,9 +113,10 @@ main {
 
 .forecast-subcontainer {
   display: flex;
-  gap: 18px;
   flex-wrap: wrap;
+  gap: 18px;
   margin-top: 10px;
+  justify-content: center; /* Center the forecast cards */
 }
 
 .forecast-slot {
@@ -124,14 +125,10 @@ main {
   padding: 10px;
   text-align: center;
   color: #ddd;
-  width: 140px; /* increased from 120px */
+  width: 135px; /* Increased width */
   box-shadow: 0 0 6px rgba(0, 120, 255, 0.2);
-  white-space: nowrap; /* prevent text from wrapping */
-}
-
-.forecast-slot div {
-  overflow: hidden;
-  text-overflow: ellipsis;
+  white-space: nowrap; /* Prevent line breaks */
+  flex-shrink: 0; /* Prevent shrinking in tight space */
 }
 
 .forecast-slot img {
