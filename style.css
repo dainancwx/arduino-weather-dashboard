@@ -114,16 +114,8 @@ main {
 .forecast-subcontainer {
   display: flex;
   gap: 18px;
-  flex-wrap: nowrap;
-  overflow-x: auto;
+  flex-wrap: wrap;
   margin-top: 10px;
-  padding-bottom: 10px;
-  scrollbar-width: none;       /* Firefox */
-  -ms-overflow-style: none;    /* IE 10+ */
-}
-
-.forecast-subcontainer::-webkit-scrollbar {
-  display: none; /* Chrome, Safari */
 }
 
 .forecast-slot {
@@ -132,8 +124,14 @@ main {
   padding: 10px;
   text-align: center;
   color: #ddd;
-  width: 120px;
+  width: 140px; /* increased from 120px */
   box-shadow: 0 0 6px rgba(0, 120, 255, 0.2);
+  white-space: nowrap; /* prevent text from wrapping */
+}
+
+.forecast-slot div {
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .forecast-slot img {
