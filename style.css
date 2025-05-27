@@ -136,3 +136,16 @@ main {
   height: 50px;
   margin: 5px 0;
 }
+
+/* 🔽 Logo support added below */
+#siteLogo {
+  height: 50px;
+  width: auto;
+  margin-right: 15px;
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
