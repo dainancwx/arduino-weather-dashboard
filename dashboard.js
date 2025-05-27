@@ -49,15 +49,44 @@ async function fetchForecast() {
     const container = document.getElementById("forecast");
     container.innerHTML = "";
 
-    const days = {};
+    const selectedForecasts = data.list.filter((_, index) => index % 3 === 0).slice(0, 15); // 5 days × 3 = 15 entries
 
-    data.list.forEach(item => {
-      const date = new Date(item.dt * 1000);
-      const dayKey = date.toISOString().split("T")[0];
+    selectedForecasts.forEach(item => {
+      const time = new Date(item.dt * 1000);
+      const displayTime = time.toLocaleString(undefined, {
+        weekday: "short",
+        hour: "2-digit",
+        minute: "2-digit",
+        hour12: true
+      });
 
-      if (!days[dayKey]) days[dayKey] = [];
-      days[dayKey].push(item);
+      const icon = `https://openweathermap.org/img/wn/${item.weather[0].icon}@2x.png`;
+      const temp = Math.round(item.main.temp);
+      const desc = item.weather[0].description;
+
+      const card = document.createElement("div");
+      card.className = "forecast-day";
+      card.innerHTML = `
+        <div>${displayTime}</div>
+        <img src="${icon}" alt="${desc}" title="${desc}" />
+        <div>${temp} °F</div>
+        <div style="font-size: 0.9rem;">${desc}</div>
+      `;
+      container.appendChild(card);
     });
+  } catch (err) {
+    console.error("Forecast error:", err);
+    document.getElementById("forecast").textContent = "Failed to load forecast.";
+  }
+}
 
-    const slicedDays = Object.keys(days).slice(0, 5);
-    slicedDays.forEach(day
+async function updateDashboard() {
+  await fetchCurrentData();
+  updateLiveTime();
+  await fetchForecast();
+}
+
+updateDashboard();
+setInterval(fetchCurrentData, 5000);
+setInterval(updateLiveTime, 1000);
+setInterval(fetchForecast, 10000);
