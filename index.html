@@ -1,48 +1,44 @@
-async function fetchForecast() {
-  try {
-    const url = `https://api.openweathermap.org/data/2.5/forecast?lat=38.336418776106676&lon=-90.15364904539364&units=imperial&appid=${API_KEY}`;
-    const res = await fetch(url);
-    const data = await res.json();
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mesonet Weather Dashboard</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header>
+    <h1>Mesonet Weather Dashboard</h1>
+    <div id="lastUpdated">Last Updated: --:--:--</div>
+  </header>
 
-    const container = document.getElementById("forecast");
-    container.innerHTML = "";
+  <main>
+    <section id="leftPanel">
+      <div class="bigTemp" id="tempValue">-- °F</div>
+      <div class="subInfo" id="pressureValue">Pressure: -- hPa</div>
+      <div class="subInfo" id="humidityValue">Humidity: -- %</div>
+    </section>
 
-    // Group by date
-    const forecastByDay = {};
-    data.list.forEach(item => {
-      const date = new Date(item.dt * 1000).toLocaleDateString();
-      if (!forecastByDay[date]) forecastByDay[date] = [];
-      forecastByDay[date].push(item);
-    });
+    <section id="rightPanel">
+      <div class="card" id="windCard">
+        <div class="windRow">
+          <div>💨 Wind Speed: <span id="windSpeedValue">-- mph</span></div>
+          <div>🧭 Wind Direction: <span id="windDirValue">-- °</span></div>
+        </div>
+      </div>
 
-    const days = Object.keys(forecastByDay).slice(0, 5);
-    days.forEach(date => {
-      forecastByDay[date].forEach((item, i) => {
-        if (i % 3 === 0) { // Approx every 8 hours
-          const time = new Date(item.dt * 1000);
-          const hour = time.toLocaleTimeString([], { hour: 'numeric', hour12: true });
-          const icon = `https://openweathermap.org/img/wn/${item.weather[0].icon}@2x.png`;
-          const temp = Math.round(item.main.temp);
-          const desc = item.weather[0].description;
-          const windSpeed = item.wind.speed;
-          const windGust = item.wind.gust ?? "N/A";
+      <div class="card" id="liveTimeCard">
+        <div>🕒 Local Time: <span id="localTime">--:--:-- --</span></div>
+        <div>🌐 UTC Time: <span id="utcTime">--:--:-- UTC</span></div>
+      </div>
+    </section>
+  </main>
 
-          const card = document.createElement("div");
-          card.className = "forecast-day";
-          card.innerHTML = `
-            <div><strong>${date}</strong> - ${hour}</div>
-            <img src="${icon}" alt="${desc}" title="${desc}" />
-            <div>${desc}</div>
-            <div>${temp} °F</div>
-            <div>🌬️ Wind: ${windSpeed.toFixed(1)} mph</div>
-            <div>💨 Gusts: ${windGust !== "N/A" ? windGust.toFixed(1) : "N/A"} mph</div>
-          `;
-          container.appendChild(card);
-        }
-      });
-    });
-  } catch (err) {
-    console.error("Forecast error:", err);
-    document.getElementById("forecast").textContent = "Failed to load forecast.";
-  }
-}
+  <section id="forecastSection">
+    <h2>5-Day Forecast</h2>
+    <div class="forecastContainer" id="forecast">Loading forecast...</div>
+  </section>
+
+  <script src="dashboard.js"></script>
+</body>
+</html>
