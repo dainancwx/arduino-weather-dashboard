@@ -21,7 +21,7 @@ async function fetchCurrentData() {
     const ampm = now.getHours() >= 12 ? "PM" : "AM";
     const hours = now.getHours() % 12 || 12;
     const time = `${hours.toString().padStart(2, "0")}:${now.getMinutes().toString().padStart(2, "0")}:${now.getSeconds().toString().padStart(2, "0")} ${ampm}`;
-    const date = `${now.getFullYear()}-${(now.getMonth()+1).toString().padStart(2, "0")}-${now.getDate().toString().padStart(2, "0")}`;
+    const date = `${now.getFullYear()}-${(now.getMonth() + 1).toString().padStart(2, "0")}-${now.getDate().toString().padStart(2, "0")}`;
     document.getElementById("lastUpdated").textContent = `Last Updated: ${date} ${time}`;
   } catch (error) {
     console.error("Error loading data:", error);
@@ -72,13 +72,19 @@ async function fetchForecast() {
         const date = new Date(forecast.dt * 1000);
         const timeLabel = date.toLocaleTimeString(undefined, { hour: '2-digit', minute: '2-digit' });
 
+        const icon = `https://openweathermap.org/img/wn/${forecast.weather[0].icon}@2x.png`;
+        const temp = Math.round(forecast.main.temp);
+        const windSpeed = forecast.wind.speed;
+        const windGust = forecast.wind.gust ?? "N/A";
+
         const card = document.createElement("div");
         card.className = "forecast-slot";
-        const icon = `https://openweathermap.org/img/wn/${forecast.weather[0].icon}@2x.png`;
         card.innerHTML = `
           <div>${timeLabel}</div>
           <img src="${icon}" alt="${forecast.weather[0].description}" />
-          <div>${Math.round(forecast.main.temp)} °F</div>
+          <div>${temp} °F</div>
+          <div>💨 ${windSpeed.toFixed(1)} mph</div>
+          <div>🌬️ Gust: ${windGust !== "N/A" ? windGust.toFixed(1) : "N/A"} mph</div>
         `;
         inner.appendChild(card);
       });
