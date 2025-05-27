@@ -84,7 +84,7 @@ async function fetchForecast() {
           <img src="${icon}" alt="${forecast.weather[0].description}" />
           <div>${temp} °F</div>
           <div>💨 ${windSpeed.toFixed(1)} mph</div>
-          <div>🌬️ Gust: ${windGust !== "N/A" ? windGust.toFixed(1) : "N/A"} mph</div>
+          <div>༄ Gust: ${windGust !== "N/A" ? windGust.toFixed(1) : "N/A"} mph</div>
         `;
         inner.appendChild(card);
       });
