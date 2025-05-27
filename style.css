@@ -114,8 +114,16 @@ main {
 .forecast-subcontainer {
   display: flex;
   gap: 18px;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
+  overflow-x: auto;
   margin-top: 10px;
+  padding-bottom: 10px;
+  scrollbar-width: none;       /* Firefox */
+  -ms-overflow-style: none;    /* IE 10+ */
+}
+
+.forecast-subcontainer::-webkit-scrollbar {
+  display: none; /* Chrome, Safari */
 }
 
 .forecast-slot {
