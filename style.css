@@ -1,126 +1,37 @@
-body {
-  margin: 0;
-  font-family: 'Segoe UI', sans-serif;
-  background-color: #121212;
-  color: #eee;
-}
-
-header {
-  background-color: #1e1e1e;
-  padding: 15px 30px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  border-bottom: 1px solid #333;
-}
-
-h1 {
-  margin: 0;
-  font-size: 1.8rem;
-}
-
-#lastUpdated {
-  font-size: 0.9rem;
-  color: #999;
-  font-family: monospace;
-}
-
-main {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 30px;
-  padding: 30px;
-  justify-content: center;
-}
-
-#leftPanel, #rightPanel {
+.forecast-day-group {
   background-color: #1f1f1f;
   border-radius: 12px;
-  padding: 25px;
-  box-shadow: 0 0 12px rgba(0, 200, 0, 0.3);
-  flex: 1 1 320px;
-}
-
-.bigTemp {
-  font-size: 5rem;
-  font-weight: 900;
-  color: #2ecc40;
-  text-align: center;
-}
-
-.subInfo {
-  font-size: 1.2rem;
-  color: #aaa;
-  text-align: center;
-}
-
-.card {
-  background-color: #292929;
-  border-radius: 10px;
-  padding: 15px 20px;
-  margin-bottom: 20px;
-  font-size: 1.1rem;
-  color: #ccc;
-  box-shadow: 0 0 6px rgba(0, 120, 255, 0.25);
-}
-
-.windRow {
-  display: flex;
-  justify-content: space-between;
-  gap: 40px;
-  flex-wrap: wrap;
-  color: #aaa;
-}
-
-#liveTimeCard {
-  display: flex;
-  justify-content: space-between;
-  gap: 30px;
-  color: #aaa;
-  flex-wrap: wrap;
-}
-
-#forecastSection {
-  padding: 0 30px 30px;
-  max-width: 960px;
-  margin: 0 auto;
-}
-
-#forecastSection h2 {
-  margin-bottom: 15px;
-  font-size: 1.6rem;
-  color: #eee;
-}
-
-.forecastContainer {
-  display: flex;
-  gap: 18px;
-  overflow-x: auto;
-  padding-bottom: 10px;
-}
-
-.forecast-day {
-  background-color: #222;
-  border-radius: 14px;
-  min-width: 130px;
-  padding: 18px 14px;
-  text-align: center;
-  color: #ddd;
+  padding: 16px;
+  margin-bottom: 24px;
   box-shadow: 0 0 10px rgba(0, 120, 255, 0.3);
 }
 
-.forecast-day div:first-child {
-  font-size: 1rem;
-  margin-bottom: 8px;
-}
-
-.forecast-day img {
-  width: 60px;
-  height: 60px;
-  margin-bottom: 8px;
-}
-
-.forecast-day div:last-child {
+.forecast-day-group h3 {
+  margin: 0 0 10px 0;
+  color: #eee;
   font-size: 1.2rem;
-  color: #59a6ff;
+  border-bottom: 1px solid #333;
+  padding-bottom: 5px;
+}
+
+.forecast-subcontainer {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.forecast-slot {
+  background-color: #292929;
+  border-radius: 10px;
+  padding: 10px;
+  text-align: center;
+  color: #ccc;
+  width: 100px;
+  box-shadow: 0 0 6px rgba(0, 120, 255, 0.25);
+}
+
+.forecast-slot img {
+  width: 50px;
+  height: 50px;
+  margin: 6px 0;
 }
