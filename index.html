@@ -5,12 +5,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Mesonet Weather Dashboard</title>
   <link rel="stylesheet" href="style.css" />
-  <link rel="icon" type="image/png" href="logo.png" /> <!-- Favicon added -->
+  <link rel="icon" type="image/png" href="images/logo.png" sizes="32x32" />
+  <link rel="shortcut icon" href="images/logo.png" type="image/png" />
 </head>
 <body>
   <header>
     <div class="logo-title">
-      <img src="logo.png" alt="Logo" class="site-logo" />
+      <img src="images/logo.png" alt="Logo" class="site-logo" />
       <h1>Mesonet Weather Dashboard</h1>
     </div>
     <div id="lastUpdated">Last Updated: --:--:--</div>
@@ -43,16 +44,17 @@
     <div class="forecastContainer" id="forecast">Loading forecast...</div>
   </section>
 
+  <footer class="watermark">
+    <img src="images/logo.png" alt="Watermark Logo" class="watermark-logo" />
+  </footer>
+
+  <footer>
+    <div class="footer-credit">
+      © 2025 Dainan Caywood | Weather Forecast Provided By:
+      <a href="https://openweathermap.org/" target="_blank" rel="noopener">OpenWeatherMap</a>
+    </div>
+  </footer>
+
   <script src="dashboard.js"></script>
-<footer class="watermark">
-  <img src="logo.png" alt="Site Logo" class="watermark-logo">
-</footer>
-
-<footer>
-  <div class="footer-credit">
-    © 2025 Dainan Caywood | Weather Forecast Provided By: <a href="https://openweathermap.org/" target="_blank" rel="noopener">OpenWeatherMap</a>
-  </div>
-</footer>
-
 </body>
 </html>
