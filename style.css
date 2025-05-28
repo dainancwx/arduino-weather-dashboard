@@ -101,7 +101,6 @@ main {
   margin-bottom: 15px;
   font-size: 1.6rem;
   color: #eee;
-  text-align: center;
 }
 
 .forecastContainer {
@@ -128,7 +127,7 @@ main {
   flex-wrap: wrap;
   gap: 18px;
   margin-top: 10px;
-  justify-content: center; /* Center forecast cards */
+  justify-content: center; /* Center the forecast cards */
 }
 
 .forecast-slot {
@@ -137,10 +136,10 @@ main {
   padding: 10px;
   text-align: center;
   color: #ddd;
-  width: 135px;
+  width: 135px; /* Increased width */
   box-shadow: 0 0 6px rgba(0, 120, 255, 0.2);
-  white-space: nowrap;
-  flex-shrink: 0;
+  white-space: nowrap; /* Prevent line breaks */
+  flex-shrink: 0; /* Prevent shrinking in tight space */
 }
 
 .forecast-slot img {
@@ -149,17 +148,39 @@ main {
   margin: 5px 0;
 }
 
-/* Footer and Watermark */
+/* Footer watermark logo */
+footer.watermark {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 40px 0 20px;
+  opacity: 0.05;
+  pointer-events: none;
+}
 
-footer {
-  position: relative;
+.watermark-logo {
+  max-width: 200px;
+  height: auto;
+}
+
+footer.copyright {
   text-align: center;
-  padding: 15px;
-  font-size: 0.85rem;
-  color: #888;
-  background-color: #121212;
-  border-top: 1px solid #333;
-  overflow: visible;
+  padding: 10px 0 30px;
+  color: #555;
+  font-size: 0.9rem;
+  font-family: monospace;
+  opacity: 0.4;
+}
+
+.logo-title {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.logo {
+  height: 40px;
+  width: auto;
 }
 
 .watermark {
@@ -167,13 +188,21 @@ footer {
   bottom: 80px;
   right: 30px;
   opacity: 0.05;
-  pointer-events: none;
   z-index: 0;
 }
 
-.watermark-logo {
+.watermark img {
   width: 150px;
   height: auto;
+}
+
+footer {
+  text-align: center;
+  padding: 15px;
+  font-size: 0.85rem;
+  color: #888;
+  background-color: #121212;
+  border-top: 1px solid #333;
 }
 
 .footer-credit a {
